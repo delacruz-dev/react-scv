@@ -1,0 +1,31 @@
+{
+  "name": "<%= data.packageName %>",
+  "private": true,
+  "version": "1.0.0",
+  "description": "<%= data.description %>",
+  "license": "MPL-2.0",
+  "main": "./build/bundle.js",
+  "config": {
+    "appBuildEntry": "src/app.js",
+	"umdBuildEntry": "src/components/index.js",
+	"html": {
+      "title": "<%= data.appTitle %>",
+      "description": "<%= data.description %>"
+    }
+  },
+  "scripts": {
+    "build": "scv build",
+    "start": "scv start --port <%= data.port %>",
+    "test": "scv test"
+  },
+  "keywords": [],
+  "devDependencies": {
+    "workshare-scv": "<%= data.version %>"
+  },
+  "dependencies": {
+    "react": "15.3.0",
+    "react-addons-test-utils": "15.3.0",
+    "react-dom": "15.3.0",
+    "react-router": "2.6.1"
+  }
+}
