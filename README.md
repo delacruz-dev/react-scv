@@ -7,7 +7,7 @@
 
 ## Before you start
 
-This project is a workshare customizzation of [`mozilla-neo`](https://github.com/mozilla/neo/) for any additional information you can check the [`mozilla-neo`](https://github.com/mozilla/neo/) repo
+This project is a workshare customization of [`mozilla-neo`](https://github.com/mozilla/neo/) for any additional information you can check the [`mozilla-neo`](https://github.com/mozilla/neo/) repo
 
 ## Features
 
