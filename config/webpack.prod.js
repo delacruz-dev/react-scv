@@ -12,9 +12,8 @@ const UMD_SRC_FILE = path.join(CWD, PACKAGE.config.umdBuildEntry);
 const BUILD = path.join(CWD, 'build');
 const nodeExternals = require('webpack-node-externals');
 
-
 module.exports = merge(core, {
-  entry: [/*'babel-polyfill',*/ UMD_SRC_FILE],
+  entry: [UMD_SRC_FILE],
   output: {
     path: BUILD,
     filename: 'bundle.js',

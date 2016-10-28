@@ -14,7 +14,7 @@ const HtmlPlugin = require('html-webpack-plugin');
 const USER_TEMPLATE = path.join(SRC, 'template.ejs');
 
 module.exports = merge(core, {
-  entry: ['babel-polyfill', SRC_FILE],
+  entry: ['babel-polyfill', 'whatwg-fetch', SRC_FILE],
   devtool: 'source-map',
   plugins: [
     new HtmlPlugin(merge({

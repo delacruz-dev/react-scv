@@ -119,7 +119,13 @@
     "webpack-node-externals": "^1.5.4",
     "worker-loader": "0.7.1",
     "yeoman-environment": "1.6.3",
-    "yeoman-generator": "0.24.1"
+    "yeoman-generator": "0.24.1",
+
+
+    "chimera": "git@github.com:workshare/chimera#6.4.222",
+    "whatwg-fetch": "1.0.0"
+
+
   },
   "devDependencies": {
     "yeoman-test": "1.5.0"

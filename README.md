@@ -3,7 +3,7 @@
 </p>
 
 
-<p align="center">Create and build React modules with zero initial configuration and minimal fuss.</p>
+<p align="center">Create and build React UMD with zero initial configuration and minimal fuss.</p>
 
 ## Before you start
 
@@ -58,6 +58,16 @@ npm install --save-dev workshare-scv
 ## Workflow
 
 - Add code to `src/` and tests to `tests/`.
-- Build and watch changes in `src/` with `npm start`.
-- Lint and build the project with `npm run build`.
+- Build and watch changes in `src/` with `npm run start`.
+- Lint and build the project as an UMD with `npm run build`.
 - Run tests with `npm test`.
+
+## Important info about browser globals
+
+When developing and running your module and with `npm run start` you will be able to access the globals presents in the 'babel-polyfill' and 'whatwg-fetch' npm modules (e.g Array.prototype.includes, window.fetch).
+When you are distributing your UMD with `npm run build` the UMD will not contains 'babel-polyfill' and 'whatwg-fetch', so if you used any of these globals in your UMD code the environment where the UMD is running must provide them.
+
+We want polyfills to be be globals at the moment but this issue may be fixed in a future version of scv through:
+https://github.com/qubyte/fetch-ponyfill
+http://babeljs.io/docs/plugins/transform-runtime/
+
