@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Component from './components/Component';
+import Component from './module/Component';
 
 ReactDOM.render(
     <Component />,

@@ -7,7 +7,7 @@
   "main": "./build/bundle.js",
   "config": {
     "appBuildEntry": "src/app.js",
-	"umdBuildEntry": "src/components/index.js",
+	"umdBuildEntry": "src/module/index.js",
 	"html": {
       "title": "<%= data.appTitle %>",
       "description": "<%= data.description %>"
