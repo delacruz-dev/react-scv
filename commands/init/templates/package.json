@@ -20,7 +20,7 @@
   },
   "keywords": [],
   "devDependencies": {
-    "workshare-scv": "<%= data.version %>"
+    "workshare-scv": "github:workshare/scv"
   },
   "dependencies": {
     "react": "15.3.0",
