@@ -106,7 +106,7 @@ module.exports = {
         }
       },
       {
-        test: /\.(png|jpg)$/,
+        test: /\.(png|jpe?g|gif)$/,
         loader: 'url',
         query: {
           limit: 8192
