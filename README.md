@@ -14,7 +14,7 @@ This project is a workshare customization of [`mozilla-neo`](https://github.com/
 - React
 - Webpack
 - ESLint, Babel, ES2015 + modules, Stage 0 preset
-- Tests and coverage with Karma, Mocha, Chai, and Enzyme
+- Tests and coverage with Karma, Mocha, Sinon, Chai, and Enzyme
 
 ## Requirements
 
@@ -25,7 +25,7 @@ This project is a workshare customization of [`mozilla-neo`](https://github.com/
 #### Global
 
 ```bash
-npm install -g scv
+npm install -g workshare/scv
 mkdir <project-name> && cd <project-name>
 scv init # and follow the prompts
 ```
@@ -34,7 +34,7 @@ scv init # and follow the prompts
 
 ```bash
 mkdir -p <project-name>/node_modules && cd <project-name>
-npm install workshare-scv
+npm install workshare/scv
 node_modules/.bin/scv init # and follow the prompts
 ```
 
@@ -42,8 +42,10 @@ node_modules/.bin/scv init # and follow the prompts
 
 ```bash
 → create package.json
-→ create src/
-→ create tests/
+→ create src/app.js
+→ create src/module/Component.js
+→ create src/module/index.js
+→ create tests/module/Component_test.js
 → create .gitignore
 → create LICENSE
 → create README.md
@@ -52,15 +54,25 @@ node_modules/.bin/scv init # and follow the prompts
 ## Install in existing project
 
 ```bash
-npm install --save-dev workshare-scv
+npm install --save-dev workshare/scv
 ```
 
 ## Workflow
 
+- Serve your module as a webapp with livereload using `npm run start`, the entry point of the webapp is `src/app.js`.
 - Add code to `src/` and tests to `tests/`.
-- Build and watch changes in `src/` with `npm run start`.
-- Lint and build the project as an UMD with `npm run build`.
 - Run tests with `npm test`.
+- Lint and build the project as an UMD with `npm run build`.
+
+## Info about the module content
+
+by default:
+
+- `src/app.js` is used as entry point to serve the module as a webapp, contents not included here will not be served by `npm run start`.
+- `src/module/index.js` is used as entry point for the UMD produced by `npm run build`, contents not included here will not become part of the distributed UMD.
+- any matching this pattern `tests/*/*_test.js` will be executed as a test when running `npm run test`.
+
+some of these default can be changed in the config section of the package.json
 
 ## Important info about browser globals
 
