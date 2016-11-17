@@ -70,7 +70,7 @@ by default:
 
 - `src/app.js` is used as entry point to serve the module as a webapp, contents not included here will not be served by `npm run start`.
 - `src/module/index.js` is used as entry point for the UMD produced by `npm run build`, contents not included here will not become part of the distributed UMD.
-- any matching this pattern `tests/*/*_test.js` will be executed as a test when running `npm run test`.
+- any file matching this pattern `tests/*/*_test.js` will be executed as a test when running `npm run test`.
 
 some of these default can be changed in the config section of the package.json
 
