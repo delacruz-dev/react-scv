@@ -124,8 +124,8 @@
     "sinon": "2.0.0-pre.3",
 
     "chimera": "git@github.com:workshare/chimera#6.4.222",
-    "whatwg-fetch": "1.0.0"
-
+    "whatwg-fetch": "1.0.0",
+    "source-map-loader": "0.1.5"
 
   },
   "devDependencies": {

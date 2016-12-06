@@ -53,6 +53,10 @@ module.exports = {
         test: /\.jsx?$/,
         include: [SRC],
         loader: 'eslint'
+      },
+      {
+        test: /\.jsx?$/,
+        loaders: ['source-map-loader']
       }
     ],
     loaders: [

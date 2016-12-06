@@ -13,6 +13,7 @@ const BUILD = path.join(CWD, 'build');
 const nodeExternals = require('webpack-node-externals');
 
 module.exports = merge(core, {
+  devtool: 'source-map',
   entry: [UMD_SRC_FILE],
   output: {
     path: BUILD,
@@ -26,8 +27,7 @@ module.exports = merge(core, {
     new Clean([BUILD], {root: CWD}),
     new webpack.optimize.UglifyJsPlugin({
       compress: {warnings: false},
-      output: {comments: false},
-      sourceMap: false
+      output: {comments: false}
     })
   ]
 });
