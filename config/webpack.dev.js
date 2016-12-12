@@ -9,11 +9,12 @@ const exists = require('exists-file').sync;
 const CWD = process.cwd();
 const PACKAGE = require(path.join(CWD, 'package.json'));
 const SRC_FILE = path.join(CWD, PACKAGE.config.appBuildEntry);
+const PROXY_CONFIG = PACKAGE.config.proxy;
 const SRC = path.dirname(SRC_FILE);
 const HtmlPlugin = require('html-webpack-plugin');
 const USER_TEMPLATE = path.join(SRC, 'template.ejs');
 
-module.exports = merge(core, {
+let devConfig = merge(core, {
   entry: ['babel-polyfill', 'whatwg-fetch', SRC_FILE],
   devtool: 'source-map',
   plugins: [
@@ -49,5 +50,12 @@ module.exports = merge(core, {
 
     // Display only errors to reduce the amount of output.
     stats: 'errors-only'
+
   }
 });
+
+if(PROXY_CONFIG){
+  devConfig.devServer.proxy = PROXY_CONFIG;
+}
+
+module.exports = devConfig;
