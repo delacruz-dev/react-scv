@@ -74,6 +74,55 @@ by default:
 
 some of these default can be changed in the config section of the package.json
 
+## Configuration
+
+A subset of the module features can be configured directly through the `config` section in the package.json
+
+here's the config section default content
+
+```
+"config": {
+  "appBuildEntry": "src/app.js",
+  "umdBuildEntry": "src/module/index.js"
+}
+```
+
+- appBuildEntry is the path of the entry point used by the webpack dev server when running `npm run start`
+- umdBuildEntry is the path of the entry point used by the webpack UMD build when running `npm run build`
+
+Another feature that can be configured from this section is a proxy for the http calls while the module is running through `npm run start`.
+Setting up a proxy during development could be useful for example to avoid CORS when contacting a server deployed on a different host and/or port.
+
+Following an example configuration for the proxy
+
+```
+"config": {
+  "proxy": {
+    "/api": {
+      "target": "https://10.30.3.52/my-backend",
+      "secure": false,
+      "logLevel": "debug"
+    }
+  }
+}
+```
+
+with this configuration all the http calls containing `/api` will be proxied to `https://10.30.3.52/my-backend`
+
+e.g
+
+`http://localhost:3000/api/license`
+
+will result in
+
+`https://10.30.3.52/my-backend/api/license`
+
+invoked by the proxy.
+
+Is important to notice that the proxy is only applied to the webpack dev server while running `npm run start`.
+
+Additional info about the proxy configuration can be found [`here`](https://webpack.github.io/docs/webpack-dev-server.html#proxy)
+
 ## Important info about browser globals
 
 When developing and running your module and with `npm run start` you will be able to access the globals presents in the 'babel-polyfill' and 'whatwg-fetch' npm modules (e.g Array.prototype.includes, window.fetch).
