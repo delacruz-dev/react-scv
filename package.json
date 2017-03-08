@@ -82,7 +82,7 @@
     "clean-webpack-plugin": "0.1.10",
     "css-loader": "0.25.0",
     "deepmerge": "0.2.10",
-    "enzyme": "2.4.1",
+    "enzyme": "2.7.1",
     "eslint": "3.5.0",
     "eslint-loader": "1.5.0",
     "eslint-plugin-mocha": "4.5.1",
