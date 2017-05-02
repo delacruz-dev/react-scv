@@ -14,7 +14,8 @@ module.exports = {
     }
   },
   frameworks: ['mocha'],
-  files: [TESTS],
+  //files: [TESTS],
+  files: [{ pattern: TESTS, watched: false, included: true, served: true }],
   preprocessors: {
     [TESTS]: ['webpack', 'sourcemap']
   },

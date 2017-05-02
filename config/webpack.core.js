@@ -38,7 +38,10 @@ module.exports = {
   ],
   resolve: {
     root: [NODE_MODULES, CWD_NODE_MODULES],
-    extensions: ['', '.js', '.jsx', '.json']
+    extensions: ['', '.js', '.jsx', '.json'],
+      alias: {
+        'react/lib/ReactMount': 'react-dom/lib/ReactMount' //TODO needed to make react 15.4.2 work with the 1.X hot reloader, update hot realoder when the 3.0 is stable
+      }
   },
   resolveLoader: {
     root: [NODE_MODULES, CWD_NODE_MODULES]

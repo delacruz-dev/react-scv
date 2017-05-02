@@ -127,6 +127,7 @@
     "source-map-loader": "0.1.5"
   },
   "devDependencies": {
-    "yeoman-test": "1.5.0"
+    "yeoman-test": "1.5.0",
+    "react-addons-test-utils": "15.4.2"
   }
 }
