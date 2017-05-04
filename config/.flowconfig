@@ -1,0 +1,14 @@
+[ignore]
+
+[include]
+
+[libs]
+
+[options]
+module.name_mapper.extension='css' -> 'empty/object'
+module.name_mapper.extension='scss' -> 'empty/object'
+module.name_mapper.extension='png' -> 'empty/object'
+module.name_mapper.extension='jpg' -> 'empty/object'
+module.name_mapper.extension='jpeg' -> 'empty/object'
+module.name_mapper.extension='gif' -> 'empty/object'
+module.name_mapper.extension='html' -> 'empty/object'

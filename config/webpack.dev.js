@@ -8,10 +8,13 @@ const exists = require('exists-file').sync;
 
 const CWD = process.cwd();
 const PACKAGE = require(path.join(CWD, 'package.json'));
+const FLOW_EXE = path.join(CWD, 'node_modules/.bin/flow');
+const FLOW_TARGET = path.join(CWD ,'/node_modules/workshare-scv/config/');
 const SRC_FILE = path.join(CWD, PACKAGE.config.appBuildEntry);
 const PROXY_CONFIG = PACKAGE.config.proxy;
 const SRC = path.dirname(SRC_FILE);
 const HtmlPlugin = require('html-webpack-plugin');
+const FlowStatusWebpackPlugin = require('flow-status-webpack-plugin');
 const USER_TEMPLATE = path.join(SRC, 'template.ejs');
 
 let devConfig = merge(core, {
@@ -32,7 +35,13 @@ let devConfig = merge(core, {
     }),
     new webpack.HotModuleReplacementPlugin(),
     // https://github.com/MoOx/eslint-loader#noerrorsplugin
-    new webpack.NoErrorsPlugin()
+    new webpack.NoErrorsPlugin(),
+    new FlowStatusWebpackPlugin({
+        root: FLOW_TARGET,
+        binaryPath: FLOW_EXE,
+        flowArgs: ' --include '+ CWD,
+        failOnError: true
+    })
   ],
   eslint: {
     configFile: path.join(__dirname, 'eslint.dev.js')
