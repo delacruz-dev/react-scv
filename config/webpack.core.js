@@ -22,7 +22,7 @@ const ENV = Object
     'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
   });
 
-const loader = name => `${name}?${qs.stringify(require(`.\/${name}`), {
+const loader = name => `${name}-loader?${qs.stringify(require(`.\/${name}`), {
   encode: false,
   arrayFormat: 'brackets'
 })}`;
@@ -37,91 +37,96 @@ module.exports = {
     new DefinePlugin(ENV)
   ],
   resolve: {
-    root: [NODE_MODULES, CWD_NODE_MODULES],
-    extensions: ['', '.js', '.jsx', '.json'],
-      alias: {
-        'react/lib/ReactMount': 'react-dom/lib/ReactMount' //TODO needed to make react 15.4.2 work with the 1.X hot reloader, update hot realoder when the 3.0 is stable
-      }
+    modules: [NODE_MODULES, CWD_NODE_MODULES],
+    extensions: ['.js', '.jsx', '.json'],
+    alias: {
+      'react/lib/ReactMount': 'react-dom/lib/ReactMount' //TODO needed to make react 15.4.2 work with the 1.X hot reloader, update hot realoder when the 3.0 is stable
+    }
   },
   resolveLoader: {
-    root: [NODE_MODULES, CWD_NODE_MODULES]
-  },
-  eslint: {
-    configFile: path.join(__dirname, 'eslint.core.js'),
-    useEslintrc: false
+    modules: [NODE_MODULES, CWD_NODE_MODULES]
   },
   module: {
-    preLoaders: [
+    rules: [
       {
-        test: /\.jsx?$/,
-        include: [SRC],
-        loader: 'eslint'
+          test: /\.jsx?$/,
+          enforce: "pre",
+          include: [SRC],
+          loader: 'eslint-loader',
+          options:{
+            configFile: path.join(__dirname, 'eslint.core.js'),
+            useEslintrc: false
+          }
       },
       {
-        test: /\.jsx?$/,
-        loaders: ['source-map-loader']
-      }
-    ],
-    loaders: [
+          test: /\.jsx?$/,
+          enforce: "pre",
+          use: [
+            {loader: 'source-map-loader'}
+          ]
+      },
       {
         test: /\.html$/,
-        loader: 'file',
-        query: {
+        loader: 'file-loader',
+        options: {
           name: '[name].[ext]'
         }
       },
       {
         test: /\.(css|scss)$/,
-        loaders: ['style', 'css', 'sass']
-      },
-      {
-        test: /\.json$/,
-        loader: 'json'
+        use: [
+          {loader: 'style-loader'},
+          {loader: 'css-loader'},
+          {loader: 'sass-loader'},
+        ]
       },
       {
         test: /\.jsx?$/,
         include: [SRC, TESTS],
         exclude: /(node_modules|bower_components)/,
-        loaders: ['react-hot', loader('babel')]
+        use: [
+          {loader: 'react-hot-loader'},
+          {loader: loader('babel')},
+        ]
       },
       {
         test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url',
-        query: {
+        loader: 'url-loader',
+        options: {
           limit: 10000,
           mimetype: 'application/font-woff'
         }
       },
       {
         test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url',
-        query: {
+        loader: 'url-loader',
+        options: {
           limit: '10000',
           mimetype: 'application/octet-stream'
         }
       },
       {
         test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'file'
+        loader: 'file-loader'
       },
       {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url',
-        query: {
+        loader: 'url-loader',
+        options: {
           limit: '10000',
           mimetype: 'application/svg+xml'
         }
       },
       {
         test: /\.(png|jpe?g|gif)$/,
-        loader: 'url',
-        query: {
+        loader: 'url-loader',
+        options: {
           limit: 8192
         }
       },
       {
         test: /\.ico(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url'
+        loader: 'url-loader'
       }
     ]
   }

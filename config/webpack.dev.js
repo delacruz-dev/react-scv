@@ -35,7 +35,7 @@ let devConfig = merge(core, {
     }),
     new webpack.HotModuleReplacementPlugin(),
     // https://github.com/MoOx/eslint-loader#noerrorsplugin
-    new webpack.NoErrorsPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
     new FlowStatusWebpackPlugin({
         root: FLOW_TARGET,
         binaryPath: FLOW_EXE,
@@ -43,8 +43,19 @@ let devConfig = merge(core, {
         failOnError: true
     })
   ],
-  eslint: {
-    configFile: path.join(__dirname, 'eslint.dev.js')
+  module: {
+    rules: [
+      {
+        test: /\.jsx?$/,
+        enforce: "pre",
+        include: [SRC],
+        loader: 'eslint-loader',
+        options:{
+            configFile: path.join(__dirname, 'eslint.dev.js'),
+            useEslintrc: false
+        }
+      },
+    ]
   },
   devServer: {
     contentBase: path.join(process.cwd(), 'src'),

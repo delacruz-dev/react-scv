@@ -8,6 +8,7 @@ const merge = require('webpack-merge');
 delete core.plugins;
 
 module.exports = merge(core, {
+  entry: function(){return {}},
   devtool: 'inline-source-map',
   // https://github.com/airbnb/enzyme/issues/47#issuecomment-207498885
   externals: {
@@ -16,12 +17,13 @@ module.exports = merge(core, {
     'react/lib/ReactContext': 'window'
   },
   module: {
-    preLoaders: [
+    rules: [
       {
         test: /\.js$/,
+        enforce: "pre",
         exclude: /(node_modules|bower_components|tests)/,
-        loader: 'isparta-instrumenter',
-        query: {
+        loader: 'isparta-instrumenter-loader',
+        options: {
           babel: require('./babel')
         }
       }
