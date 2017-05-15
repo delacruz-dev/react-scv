@@ -108,7 +108,7 @@
     "karma-mocha-reporter": "2.1.0",
     "karma-sourcemap-loader": "0.3.7",
     "karma-webpack": "1.8.0",
-    "flow-status-webpack-plugin": "git@github.com:marcellomontemagno/flow-status-webpack-plugin#d7bd2e8",
+    "flow-status-webpack-plugin": "git@github.com:marcellomontemagno/flow-status-webpack-plugin#bc495c6",
     "mocha": "3.0.2",
     "node-sass": "3.10.0",
     "promise-sync": "1.1.5",
