@@ -66,7 +66,6 @@ let devConfig = merge(core, {
     historyApiFallback: true,
 
     hot: true,
-    progress: true,
 
     // Display only errors to reduce the amount of output.
     stats: 'errors-only'

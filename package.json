@@ -122,7 +122,7 @@
     "url-loader": "0.5.7",
     "vorpal": "1.4.1",
     "webpack": "2.5.0",
-    "webpack-dev-server": "1.15.2",
+    "webpack-dev-server": "2.4.5",
     "webpack-hot-middleware": "2.12.2",
     "webpack-merge": "0.14.1",
     "webpack-node-externals": "^1.5.4",
