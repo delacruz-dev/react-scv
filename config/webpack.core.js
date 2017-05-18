@@ -76,10 +76,24 @@ module.exports = {
         }
       },
       {
-        test: /\.(css|scss)$/,
+        test: /\.s?css$/, // alternative *** : ^(?:(?:[^\.\s]+\.)(?!module))+s?css$
         use: [
           {loader: 'style-loader'},
           {loader: 'css-loader'},
+          {loader: 'sass-loader'},
+        ]
+      },
+      {
+        test: /\.s?cssm$/, // alternative *** : \.module\.s?css$
+        use: [
+          {loader: 'style-loader'},
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              localIdentName: '[name]_[local]_[hash:base64:3]'
+            }
+          },
           {loader: 'sass-loader'},
         ]
       },
