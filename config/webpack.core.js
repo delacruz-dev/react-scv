@@ -22,6 +22,8 @@ const ENV = Object
     'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
   });
 
+var ProgressBarPlugin = require('progress-bar-webpack-plugin');
+
 const loader = name => `${name}-loader?${qs.stringify(require(`.\/${name}`), {
   encode: false,
   arrayFormat: 'brackets'
@@ -34,7 +36,8 @@ module.exports = {
     publicPath: '/'
   },
   plugins: [
-    new DefinePlugin(ENV)
+    new DefinePlugin(ENV),
+    new ProgressBarPlugin({clear: false})
   ],
   resolve: {
     modules: [NODE_MODULES, CWD_NODE_MODULES],
