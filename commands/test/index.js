@@ -1,15 +1,38 @@
 'use strict';
 
 const path = require('path');
-const Server = require('karma').Server;
+const CONFIG_FILE_PATH = path.join(__dirname, '../../config/jest.js');
+const jest = require('jest');
 
 module.exports = (args, done) => {
-  new Server({
-    configFile: args.options.config ?
-      path.resolve(process.cwd(), args.options.config) :
-      path.join(__dirname, 'karma.conf.js'),
-    singleRun: !args.options.watch,
-    autoWatch: args.options.watch
-  }, done)
-  .start();
-};
+
+    let processArgs = process.argv.splice(1);
+
+    processArgs = addConfigArgIfNotPresent(processArgs);
+
+    const argsString = stringify(processArgs);
+
+    console.log('running: jest ' + argsString)
+
+    jest.run(argsString, process.cwd());
+
+}
+
+function addConfigArgIfNotPresent (processArgs) {
+    if (!isConfigArgPresent(processArgs)) {
+        return processArgs.concat(['--config=' + CONFIG_FILE_PATH]);
+    }
+    return processArgs;
+}
+
+function isConfigArgPresent (processArgs) {
+    return processArgs.findIndex(isConfigArg) !== -1;
+}
+
+const isConfigArg = (e) => e.indexOf('--config') !== -1;
+
+function stringify (argv) {
+    return argv.reduce((acc, e) => {
+        return acc + e + ' ';
+    }, '');
+}
