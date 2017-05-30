@@ -15,6 +15,7 @@
   },
   "scripts": {
     "build": "scv build",
+    "dll": "scv dll",
     "start": "scv start --port <%= data.port %>",
     "test": "scv test"
   },

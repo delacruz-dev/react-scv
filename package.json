@@ -52,6 +52,14 @@
       }
     },
     {
+      "name": "dll",
+      "description": "dll",
+      "environment": "production",
+      "options": {
+        "--config [file]": "Specify an alternate webpack configuration to use"
+      }
+    },
+    {
       "name": "test",
       "description": "Run the project's tests and generate coverage reports",
       "environment": "test",

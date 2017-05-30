@@ -57,7 +57,7 @@ module.exports = {
           include: [SRC],
           loader: 'eslint-loader',
           options:{
-            configFile: path.join(__dirname, 'eslint.core.js'),
+            configFile: path.join(__dirname, 'eslint.dev.js'),
             useEslintrc: false
           }
       },

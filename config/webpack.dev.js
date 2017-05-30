@@ -41,6 +41,10 @@ let devConfig = merge(core, {
         binaryPath: FLOW_EXE,
         flowArgs: ' --include '+ CWD,
         failOnError: true
+    }),
+    new webpack.DllReferencePlugin({
+        context: '.',
+        manifest: require(path.join(CWD, 'build/dev-dll-manifest.json'))
     })
   ],
   module: {
@@ -58,7 +62,7 @@ let devConfig = merge(core, {
     ]
   },
   devServer: {
-    contentBase: path.join(process.cwd(), 'src'),
+    contentBase: [path.join(process.cwd(), 'src'), path.join(process.cwd(), 'build')],
 
     // Enable history API fallback so HTML5 History API based
     // routing works. This is a good default that will come
@@ -69,6 +73,7 @@ let devConfig = merge(core, {
 
     // Display only errors to reduce the amount of output.
     stats: 'errors-only',
+    //stats: { colors: true, maxModules: 1000 }
 
     disableHostCheck: true
 
