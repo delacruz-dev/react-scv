@@ -68,7 +68,9 @@ let devConfig = merge(core, {
     hot: true,
 
     // Display only errors to reduce the amount of output.
-    stats: 'errors-only'
+    stats: 'errors-only',
+
+    disableHostCheck: true
 
   }
 });

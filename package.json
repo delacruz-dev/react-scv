@@ -10,7 +10,8 @@
     "build",
     "commands",
     "config",
-    "src"
+    "src",
+    "utils"
   ],
   "bin": {
     "scv": "./bin/scv"
