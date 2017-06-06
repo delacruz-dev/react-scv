@@ -3,6 +3,10 @@
 const DevServer = require('webpack-dev-server');
 const path = require('path');
 const fs = require('fs');
+const FlowStatusWebpackPlugin = require('flow-status-webpack-plugin');
+const CWD = process.cwd();
+const FLOW_EXE = path.join(CWD, 'node_modules/.bin/flow');
+const FLOW_TARGET = path.join(CWD ,'/node_modules/workshare-scv/config/');
 const webpack = require('webpack');
 
 module.exports = (args, done) => {
@@ -10,6 +14,7 @@ module.exports = (args, done) => {
   buildDllIfNotPresent(()=>{
 
       const port = args.options.port;
+      const flow = args.options.flow;
       const config = args.options.config ?
           require(path.resolve(process.cwd(), args.options.config)) :
           require('../../config/webpack.dev');
@@ -23,6 +28,15 @@ module.exports = (args, done) => {
       );
 
       console.log('starting dev server, and api proxy');
+
+      if(flow){
+          config.plugins.push(new FlowStatusWebpackPlugin({
+              root: FLOW_TARGET,
+              binaryPath: FLOW_EXE,
+              flowArgs: ' --include '+ CWD,
+              failOnError: true
+          }));
+      }
 
       const compiler = webpack(config);
       const server = new DevServer(compiler, config.devServer);

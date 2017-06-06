@@ -40,7 +40,8 @@
           "Specify to port on which to start the development server",
           4000
         ],
-        "--config [file]": "Specify an alternate webpack configuration to use"
+        "--config [file]": "Specify an alternate webpack configuration to use",
+        "--flow": "Starts flow type checking"
       }
     },
     {
