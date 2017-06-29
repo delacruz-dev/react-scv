@@ -14,7 +14,9 @@ This project is a workshare customization of [`mozilla-neo`](https://github.com/
 - React
 - Webpack
 - ESLint, Babel, ES2015 + modules, Stage 0 preset
-- Tests and coverage with Karma, Mocha, Sinon, Chai, and Enzyme
+- Tests and coverage Jest
+- CSS modules
+- FLow
 
 ## Requirements
 
