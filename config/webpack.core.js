@@ -131,7 +131,7 @@ module.exports = {
         loader: 'url-loader',
         options: {
           limit: '10000',
-          mimetype: 'application/svg+xml'
+          mimetype: 'image/svg+xml'
         }
       },
       {
