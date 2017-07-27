@@ -16,6 +16,7 @@ module.exports = {
     moduleDirectories: [CWD_NODE_MODULES, NODE_MODULES],
     moduleNameMapper: {
         "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": JEST_FILE_MOCK,
-        "\\.(css|less|scss|cssm|scssm)$": JEST_STYLE_MOCK
+        "\\.(css|less|scss)$": JEST_STYLE_MOCK,
+        "\\.(cssm|scssm)$": "identity-obj-proxy"
     }
 }
