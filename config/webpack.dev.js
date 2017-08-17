@@ -30,6 +30,7 @@ let devConfig = merge(core, {
       minChunks: Infinity,
       filename: 'vendor.bundle.js'
     }),
+    new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     // https://github.com/MoOx/eslint-loader#noerrorsplugin
     new webpack.NoEmitOnErrorsPlugin(),

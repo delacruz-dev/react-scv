@@ -41,10 +41,7 @@ module.exports = {
   ],
   resolve: {
     modules: [NODE_MODULES, CWD_NODE_MODULES],
-    extensions: ['.js', '.jsx', '.json'],
-    alias: {
-      'react/lib/ReactMount': 'react-dom/lib/ReactMount' //TODO needed to make react 15.4.2 work with the 1.X hot reloader, update hot realoder when the 3.0 is stable
-    }
+    extensions: ['.js', '.jsx', '.json']
   },
   resolveLoader: {
     modules: [NODE_MODULES, CWD_NODE_MODULES]
@@ -102,9 +99,22 @@ module.exports = {
         include: [SRC, TESTS],
         exclude: /(node_modules|bower_components)/,
         use: [
-          {loader: 'react-hot-loader'},
-          {loader: loader('babel')},
-        ]
+          {
+            loader: 'babel-loader',
+            options: {
+              babelrc: false,
+              presets: [
+                ['babel-preset-es2015',{ "modules": false }], //{ "modules": false } is needed to make react-hot-loader work
+                'babel-preset-flow',
+                'babel-preset-stage-0',
+                'babel-preset-react'
+              ],
+              plugins: [
+                'react-hot-loader/babel'
+              ]
+            }
+          },
+        ],
       },
       {
         test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,

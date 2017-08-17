@@ -23,6 +23,7 @@ module.exports = (args, done) => {
       const host = config.devServer.host || 'localhost';
 
       config.entry.unshift(
+          "react-hot-loader/patch",
           `webpack-dev-server/client?${schema}://${host}:${port}`,
           'webpack/hot/dev-server'
       );
@@ -39,6 +40,9 @@ module.exports = (args, done) => {
       }
 
       const compiler = webpack(config);
+
+      config.output.publicPath = "http://" + host + ":" + port + config.output.publicPath;
+
       const server = new DevServer(compiler, config.devServer);
 
       server.listen(port, host, () => console.log(`Listening on ${schema}://${host}:${port}`));

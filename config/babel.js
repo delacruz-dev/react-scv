@@ -6,5 +6,6 @@ module.exports = {
     require.resolve('babel-preset-flow'),
     require.resolve('babel-preset-stage-0'),
     require.resolve('babel-preset-react')
-  ]
+  ],
+  plugins: ["react-hot-loader/babel"]
 };
