@@ -10,7 +10,7 @@ const CWD = process.cwd();
 const BUILD = path.join(CWD, 'build');
 
 let dllModules = getOnlyInstalledModules(['cookies-js', 'mixpanel-browser', 'moment', 'query-string', 'react', 'react-addons-test-utils', 'react-datetime', 'react-dom', 'react-router', 'validator',
-    'babel-polyfill', 'whatwg-fetch', 'react-hot-loader', 'webpack-hot-middleware', 'sockjs-client', 'querystring-es3', 'ansi-html', 'html-entities', 'punycode', 'events']);
+    'babel-polyfill', 'whatwg-fetch', /*'react-hot-loader', including react-hot-loader in the dll partially breaks it */, 'sockjs-client', 'querystring-es3', 'ansi-html', 'html-entities', 'punycode', 'events']);
 
 function getOnlyInstalledModules (modules) {
     let result = [];
