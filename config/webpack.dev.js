@@ -36,7 +36,7 @@ let devConfig = merge(core, {
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DllReferencePlugin({
         context: '.',
-        manifest: require(path.join(CWD, 'build/dev-dll-manifest.json'))
+        manifest: require(path.join(CWD, 'build/dll/dev-dll-manifest.json'))
     })
   ],
   module: {

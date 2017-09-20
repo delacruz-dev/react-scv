@@ -29,19 +29,19 @@
   "commands": [
     {
       "name": "init",
-      "description": "Scaffold and initialize a React-based application",
+      "description": "Scaffold and initialize a React-based module",
       "generator": true
     },
     {
       "name": "start",
-      "description": "Start a webpack development server",
+      "description": "Start the development server",
       "options": {
         "--port [port]": [
-          "Specify to port on which to start the development server",
+          "Specify the port on which to start the development server",
           4000
         ],
-        "--config [file]": "Specify an alternate webpack configuration to use",
-        "--flow": "Starts flow type checking"
+        "--config [file]": "Specify an alternative webpack configuration to use",
+        "--flow": "[experimental] Starts flow type checking"
       }
     },
     {
@@ -49,22 +49,21 @@
       "description": "Render the application to static assets",
       "environment": "production",
       "options": {
-        "--config [file]": "Specify an alternate webpack configuration to use"
-      }
-    },
-    {
-      "name": "dll",
-      "description": "dll",
-      "environment": "production",
-      "options": {
-        "--config [file]": "Specify an alternate webpack configuration to use"
+        "--umdBuildConfig [file]": "Specify an alternative webpack configuration to use for the build of the UMD",
+        "--appBuildConfig [file]": "Specify an alternative webpack configuration to use for the build of the app"
       }
     },
     {
       "name": "test",
-      "description": "Run the project's tests and generate coverage reports",
+      "description": "Run the project's tests",
       "environment": "test",
-      "options": {}
+      "options": {
+        "other arguments" : "any valid Jest argument can be used e.g 'npm run test -- --watch'"
+      }
+    },
+    {
+      "name": "dll",
+      "description": "used internally by the scv to make the startup time of the dev server faster"
     }
   ],
   "keywords": [

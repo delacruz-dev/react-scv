@@ -3,21 +3,21 @@
   "private": true,
   "version": "1.0.0",
   "description": "<%= data.description %>",
-  "license": "MPL-2.0",
-  "main": "./build/bundle.js",
+  "main": "./build/umd.js",
+  "module": "./src/module/index.js",
   "config": {
     "appBuildEntry": "src/app.js",
-	"umdBuildEntry": "src/module/index.js",
-	"html": {
+    "umdBuildEntry": "src/module/index.js",
+    "html": {
       "title": "<%= data.appTitle %>",
       "description": "<%= data.description %>"
     }
   },
   "scripts": {
     "build": "scv build",
-    "dll": "scv dll",
     "start": "scv start --port <%= data.port %>",
-    "test": "scv test"
+    "test": "scv test",
+    "postinstall": "scv dll"
   },
   "keywords": [],
   "devDependencies": {

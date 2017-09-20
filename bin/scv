@@ -9,7 +9,9 @@ const commands = require('../package.json').commands;
 
 const cli = new Vorpal();
 const env = yeoman.createEnv();
-let register = (command) => {
+
+let registerCliCommand = (command) => {
+
   const name = command.name;
   const generator = command.generator;
   const options = command.options || [];
@@ -56,10 +58,8 @@ let register = (command) => {
     });
 };
 
-commands.map(register);
+commands.map(registerCliCommand);
 
-cli
-  .find('exit')
-  .hidden();
+cli.find('exit').hidden();
 
-cli.parse.apply(cli, process.argv[2] ? [process.argv] : process.argv.concat(['help']));
+cli.parse.apply(cli, process.argv[2] ? [process.argv] : [process.argv.concat(['help'])]);

@@ -9,7 +9,7 @@ const webpack = require('webpack');
 const CWD = process.cwd();
 const PACKAGE = require(path.join(CWD, 'package.json'));
 const UMD_SRC_FILE = path.join(CWD, PACKAGE.config.umdBuildEntry);
-const BUILD = path.join(CWD, 'build');
+const BUILD = path.join(CWD, 'build/umd');
 const nodeExternals = require('webpack-node-externals');
 
 module.exports = merge(core, {
@@ -17,7 +17,7 @@ module.exports = merge(core, {
   entry: [UMD_SRC_FILE],
   output: {
     path: BUILD,
-    filename: 'bundle.js',
+    filename: 'umd.js',
     library: PACKAGE.name,
     libraryTarget: 'umd',
     umdNamedDefine: true

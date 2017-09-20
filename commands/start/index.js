@@ -28,8 +28,9 @@ module.exports = (args, done) => {
           'webpack/hot/dev-server'
       );
 
-      console.log('starting dev server, and api proxy');
+      console.log(' --- starting dev server, and api proxy --- ');
 
+      //todo experimental feature
       if(flow){
           config.plugins.push(new FlowStatusWebpackPlugin({
               root: FLOW_TARGET,
@@ -55,11 +56,13 @@ module.exports = (args, done) => {
 
 function buildDllIfNotPresent(cb){
 
-    console.log('checking dll existence');
+    console.log(' --- checking dll existence --- ');
 
-    if (!fs.existsSync(path.join(process.cwd(), 'build/dev-dll-manifest.json'))) {
+    if (!fs.existsSync(path.join(process.cwd(), 'build/dll/dev-dll-manifest.json'))) {
 
-        console.log('dll not found, building dll');
+        console.log('dll not found');
+
+        console.log(' --- building the dll ---');
 
         webpack(require('../../config/webpack.dll'), (err, stats) => {
 
@@ -78,7 +81,7 @@ function buildDllIfNotPresent(cb){
         });
 
     }else{
-        console.log('dll found, update your dll for better performance if needed');
+        console.log('dll found, no need to build them again');
         cb();
     }
 
