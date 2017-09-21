@@ -4,6 +4,12 @@ const path = require('path');
 const umdConfig = require('../../config/webpack.umd');
 const appConfig = require('../../config/webpack.app');
 const webpack = require('webpack');
+const fs = require('fs');
+
+const CWD = process.cwd();
+const PACKAGE = require(path.join(CWD, 'package.json'));
+const APP_BUILD_ENTRY = path.join(CWD, PACKAGE.scv.appBuildEntry);
+const UMD_BUILD_ENTRY = path.join(CWD, PACKAGE.scv.umdBuildEntry);
 
 module.exports = (args, done) => {
 
@@ -16,12 +22,20 @@ module.exports = (args, done) => {
     appConfig;
 
   function step2 () {
-    console.log(' --- building the app --- ');
-    webpackBuild(appBuildConfig, done);
+    if (fs.existsSync(APP_BUILD_ENTRY)) {
+      console.log(' --- building the app --- ');
+      webpackBuild(appBuildConfig, done);
+    } else {
+      done();
+    }
   }
 
-  console.log(' --- building the umd ---');
-  webpackBuild(umdBuildConfig, step2);
+  if (fs.existsSync(UMD_BUILD_ENTRY)) {
+    console.log(' --- building the umd ---');
+    webpackBuild(umdBuildConfig, step2);
+  } else {
+    step2();
+  }
 
 };
 
