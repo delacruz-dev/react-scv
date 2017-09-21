@@ -2,37 +2,20 @@
   <img src="scv.jpeg" height="96" />
 </p>
 
+<p align="center">Create React modules with zero configuration needed.</p>
 
-<p align="center">Create and build React UMD with zero initial configuration and minimal fuss.</p>
+## What is it about?
 
-## Before you start
+This library allows you to create React modules with no configuration needed.
 
-This project is a workshare customization of [`mozilla-neo`](https://github.com/mozilla/neo/) for any additional information you can check the [`mozilla-neo`](https://github.com/mozilla/neo/) repo
+## What do you mean with "React modules"
 
-## Features
+We mean a project that:
 
-- React
-- Webpack
-- ESLint, Babel, ES2015 + modules, Stage 0 preset
-- Tests and coverage Jest
-- CSS modules
-- FLow
+- Is a React "web application" that can be served statically on a server.
+- Is also a "library" that can be imported by other projects as an npm dependency.
 
-## Requirements
-
-- Node.js v4+ and npm
-
-## Initialize empty project
-
-#### Global
-
-```bash
-npm install -g workshare/scv
-mkdir <project-name> && cd <project-name>
-scv init # and follow the prompts
-```
-
-#### Local
+## How to create a new project?
 
 ```bash
 mkdir -p <project-name>/node_modules && cd <project-name>
@@ -40,45 +23,56 @@ npm install workshare/scv
 node_modules/.bin/scv init # and follow the prompts
 ```
 
-##### Sample output
+## What features I get for free in my project?
 
-```bash
-→ create package.json
-→ create src/app.js
-→ create src/module/Component.js
-→ create src/module/index.js
-→ create tests/module/Component_test.js
-→ create .gitignore
-→ create LICENSE
-→ create README.md
-```
+- React
+- Webpack
+- Webpack DLL
+- Webpack API proxy (you need to tell what to proxy though)
+- react-hot-loader 3.0
+- Babel, ES2015 + modules, Stage 0 preset
+- Tests and coverage with Jest
+- Enzyme
+- CSS modules
+- ESLint
 
-## Install in existing project
+## How to work with the created project?
 
-```bash
-npm install --save-dev workshare/scv
-```
+- Serve your "web application" on a devServer with hot-reload using `npm run start`, the entry point of your "web application" is `src/app.js`.
+- Add as much code as you want in `src/` and `tests/`.
+- Run tests with `npm run test`.
+- Do some ES6 export in `src/module/index.js` to make the exported objects available to the users of your "library".
+- Distribute both the "web application" and the "library" with `npm run build`.
 
-## Workflow
+## What if I don't care about the "web application" part of the build?
 
-- Serve your module as a webapp with livereload using `npm run start`, the entry point of the webapp is `src/app.js`.
-- Add code to `src/` and tests to `tests/`.
-- Run tests with `npm test`.
-- Lint and build the project as an UMD with `npm run build`.
+You can delete the file `src/app.js` and forget about it, you will only get the UMD part when running `npm run build`
 
-## Info about the module content
+## What if I don't care about the "library" part of the build?
 
-by default:
+You can delete the file `src/module/index.js` and forget about it, you will only get the "React web application" part when running `npm run build`
 
-- `src/app.js` is used as entry point to serve the module as a webapp, contents not included here will not be served by `npm run start`.
-- `src/module/index.js` is used as entry point for the UMD produced by `npm run build`, contents not included here will not become part of the distributed UMD.
-- any file matching this pattern `tests/*/*_test.js` will be executed as a test when running `npm run test`.
+## Info about the build result
 
-some of these default can be changed in the config section of the package.json
+Running `npm run build` will produce
 
-## Configuration
+- A folder `build/app` containing your web application, serve the content of this folder on any web server and enjoy
+- A folder `build/umd` containing the transpiled code of your library
 
-A subset of the module features can be configured directly through the `config` section in the package.json
+## Info about your project content
+
+If it wasn't clear yet
+
+- `src/app.js` is used as entry point to serve and build your project as a "web application", contents not included in this file will not be served by `npm run start` and will not be built by `npm run build`.
+- `src/module/index.js` is used as entry point for the "library" produced by `npm run build`, contents not included in this file will not be part of the "library".
+
+Delete one of this two files if you are not interested in its build result.
+
+Is important to notice that your project doesn't contain any configuration file, all the needed configuration files are inside the workshare-scv dependency.
+
+## (Optional) Configuration... If you want it so bad
+
+A subset of the module features can be configured directly through the `scv` section in the package.json
 
 here's the config section default content
 
@@ -98,7 +92,7 @@ Setting up a proxy during development could be useful for example to avoid CORS 
 Following an example configuration for the proxy
 
 ```
-"config": {
+"scv": {
   "proxy": {
     "/api": {
       "target": "https://10.30.3.52/my-backend",
@@ -125,12 +119,11 @@ Is important to notice that the proxy is only applied to the webpack dev server 
 
 Additional info about the proxy configuration can be found [`here`](https://webpack.github.io/docs/webpack-dev-server.html#proxy)
 
-## Important info about browser globals
+## Info about browser globals
 
 When developing and running your module and with `npm run start` you will be able to access the globals presents in the 'babel-polyfill' and 'whatwg-fetch' npm modules (e.g Array.prototype.includes, window.fetch).
 When you are distributing your UMD with `npm run build` the UMD will not contains 'babel-polyfill' and 'whatwg-fetch', so if you used any of these globals in your UMD code the environment where the UMD is running must provide them.
 
-We want polyfills to be be globals at the moment but this issue may be fixed in a future version of scv through:
-https://github.com/qubyte/fetch-ponyfill
-http://babeljs.io/docs/plugins/transform-runtime/
+## Extra info
 
+This project is a workshare customization/extension of [`mozilla-neo`](https://github.com/mozilla/neo/)
