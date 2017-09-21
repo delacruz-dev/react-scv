@@ -9,7 +9,7 @@ const webpack = require('webpack');
 
 const CWD = process.cwd();
 const PACKAGE = require(path.join(CWD, 'package.json'));
-const APP_SRC_FILE = path.join(CWD, PACKAGE.config.appBuildEntry);
+const APP_SRC_FILE = path.join(CWD, PACKAGE.scv.appBuildEntry);
 const BUILD = path.join(CWD, 'build/app');
 
 module.exports = merge(core, {

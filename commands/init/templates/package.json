@@ -5,7 +5,7 @@
   "description": "<%= data.description %>",
   "main": "./build/umd.js",
   "module": "./src/module/index.js",
-  "config": {
+  "scv": {
     "appBuildEntry": "src/app.js",
     "umdBuildEntry": "src/module/index.js",
     "html": {

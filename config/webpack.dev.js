@@ -8,8 +8,8 @@ const exists = require('exists-file').sync;
 
 const CWD = process.cwd();
 const PACKAGE = require(path.join(CWD, 'package.json'));
-const SRC_FILE = path.join(CWD, PACKAGE.config.appBuildEntry);
-const PROXY_CONFIG = PACKAGE.config.proxy;
+const SRC_FILE = path.join(CWD, PACKAGE.scv.appBuildEntry);
+const PROXY_CONFIG = PACKAGE.scv.proxy;
 const SRC = path.dirname(SRC_FILE);
 const HtmlPlugin = require('html-webpack-plugin');
 const USER_TEMPLATE = path.join(SRC, 'template.ejs');
@@ -24,7 +24,7 @@ let devConfig = merge(core, {
           path.join(__dirname, '../src/template.ejs'),
       hash: true,
       xhtml: true
-    }, PACKAGE.config.html || {})),
+    }, PACKAGE.scv.html || {})),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
       minChunks: Infinity,
