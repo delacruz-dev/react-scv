@@ -1,6 +1,5 @@
 'use strict';
 
-const Clean = require('clean-webpack-plugin');
 const core = require('./webpack.core');
 const merge = require('webpack-merge');
 const path = require('path');
@@ -8,7 +7,7 @@ const fs = require('fs');
 const webpack = require('webpack');
 
 const CWD = process.cwd();
-const BUILD = path.join(CWD, 'build/dll');
+const BUILD = path.join(CWD, 'build/app');
 
 //todo NOTE: do not include react-hot-loader in the dll https://github.com/gaearon/react-hot-loader/issues/627
 let dllModules = getOnlyInstalledModules(['cookies-js', 'mixpanel-browser', 'moment', 'query-string', 'react', 'react-addons-test-utils', 'react-datetime', 'react-dom', 'react-router', 'validator',
@@ -27,7 +26,7 @@ function getOnlyInstalledModules (modules) {
 
 const config = merge(core, {
     entry: {
-        'dev': dllModules.concat([
+        'app': dllModules.concat([
             'lodash/cloneDeep', 'lodash/merge', 'lodash/isEqual'
         ]),
     },
@@ -37,7 +36,6 @@ const config = merge(core, {
         library: '[name]_dll',
     },
     plugins: [
-        new Clean([BUILD], {root: CWD}),
         new webpack.DllPlugin({
             // The path to the manifest file which maps between
             // modules included in a bundle and the internal IDs

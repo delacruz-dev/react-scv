@@ -20,16 +20,24 @@ module.exports = merge(core, {
     filename: 'app.js'
   },
   plugins: [
-    new Clean([BUILD], {root: CWD}),
+    new Clean([BUILD], {
+      root: CWD,
+      exclude: ['app-dll.js','app-dll-manifest.json'],
+      verbose: true,
+    }),
+    new webpack.DllReferencePlugin({
+      context: '.',
+      manifest: require(path.join(CWD, 'build/app/app-dll-manifest.json'))
+    }),
     new webpack.optimize.UglifyJsPlugin({
       compress: {warnings: false},
       output: {comments: false},
       sourceMap: true //needed because of http://stackoverflow.com/questions/41942811/webpack-2-devtool-not-working
     }),
-    new HtmlPlugin({
-      template: path.join(__dirname, '../src/appTemplate.ejs'),
+    new HtmlPlugin(merge({
+      template: path.join(__dirname, '../src/template.ejs'),
       hash: true,
       xhtml: true
-    })
+    }, PACKAGE.scv.html || {}))
   ]
 });

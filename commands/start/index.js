@@ -8,6 +8,7 @@ const CWD = process.cwd();
 const FLOW_EXE = path.join(CWD, 'node_modules/.bin/flow');
 const FLOW_TARGET = path.join(CWD ,'/node_modules/workshare-scv/config/');
 const webpack = require('webpack');
+const buildDllIfNotPresent = require('../../src/buildDllIfNotPresent');
 
 module.exports = (args, done) => {
 
@@ -53,36 +54,3 @@ module.exports = (args, done) => {
   });
 
 };
-
-function buildDllIfNotPresent(cb){
-
-    console.log(' --- checking dll existence --- ');
-
-    if (!fs.existsSync(path.join(process.cwd(), 'build/dll/dev-dll-manifest.json'))) {
-
-        console.log('dll not found');
-
-        console.log(' --- building the dll ---');
-
-        webpack(require('../../config/webpack.dll'), (err, stats) => {
-
-            if (!err) {
-                console.log(stats.toString({colors: true}));
-            } else {
-                console.error(err.stack || err);
-
-                if (err.details) {
-                    console.error(err.details);
-                }
-            }
-
-            cb();
-
-        });
-
-    }else{
-        console.log('dll found, no need to build them again');
-        cb();
-    }
-
-}

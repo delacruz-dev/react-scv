@@ -4,7 +4,6 @@ const core = require('./webpack.core');
 const merge = require('webpack-merge');
 const path = require('path');
 const webpack = require('webpack');
-const exists = require('exists-file').sync;
 
 const CWD = process.cwd();
 const PACKAGE = require(path.join(CWD, 'package.json'));
@@ -12,16 +11,13 @@ const SRC_FILE = path.join(CWD, PACKAGE.scv.appBuildEntry);
 const PROXY_CONFIG = PACKAGE.scv.proxy;
 const SRC = path.dirname(SRC_FILE);
 const HtmlPlugin = require('html-webpack-plugin');
-const USER_TEMPLATE = path.join(SRC, 'template.ejs');
 
 let devConfig = merge(core, {
   entry: ['babel-polyfill', 'whatwg-fetch', SRC_FILE],
   devtool: 'source-map',
   plugins: [
     new HtmlPlugin(merge({
-      template: exists(USER_TEMPLATE) ?
-          USER_TEMPLATE :
-          path.join(__dirname, '../src/template.ejs'),
+      template: path.join(__dirname, '../src/template.ejs'),
       hash: true,
       xhtml: true
     }, PACKAGE.scv.html || {})),
@@ -36,7 +32,7 @@ let devConfig = merge(core, {
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DllReferencePlugin({
         context: '.',
-        manifest: require(path.join(CWD, 'build/dll/dev-dll-manifest.json'))
+        manifest: require(path.join(CWD, 'build/app/app-dll-manifest.json'))
     })
   ],
   module: {
@@ -54,7 +50,7 @@ let devConfig = merge(core, {
     ]
   },
   devServer: {
-    contentBase: [path.join(process.cwd(), 'src'), path.join(process.cwd(), 'build')],
+    contentBase: [path.join(process.cwd(), 'src'), path.join(process.cwd(), 'build/app')],
 
     // Enable history API fallback so HTML5 History API based
     // routing works. This is a good default that will come
