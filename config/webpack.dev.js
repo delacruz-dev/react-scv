@@ -1,5 +1,7 @@
 'use strict';
 
+const overrides = require('../src/overrides');
+
 const core = require('./webpack.core');
 const merge = require('webpack-merge');
 const path = require('path');
@@ -43,7 +45,7 @@ let devConfig = merge(core, {
         include: [SRC],
         loader: 'eslint-loader',
         options:{
-            configFile: path.join(__dirname, 'eslint.dev.js'),
+            configFile: overrides.filePath(path.join(__dirname, 'eslint.dev.js')),
             useEslintrc: false
         }
       },

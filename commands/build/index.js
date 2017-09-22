@@ -1,5 +1,6 @@
 'use strict';
 
+const overrides = require('../../src/overrides');
 const path = require('path');
 const buildDllIfNotPresent = require('../../src/buildDllIfNotPresent');
 const webpackBuild = require('../../src/webpackBuild');
@@ -15,21 +16,13 @@ module.exports = (args, done) => {
 
   buildDllIfNotPresent(() => {
 
-    const umdConfig = require('../../config/webpack.umd');
-    const appConfig = require('../../config/webpack.app');
-
-    let umdBuildConfig = args.options.umdBuildConfig ?
-      require(path.resolve(process.cwd(), args.options.umdBuildConfig)) :
-      umdConfig;
-
-    let appBuildConfig = args.options.appBuildConfig ?
-      require(path.resolve(process.cwd(), args.options.appBuildConfig)) :
-      appConfig;
+    const umdConfig = overrides.require(require.resolve('../../config/webpack.umd'));
+    const appConfig = overrides.require(require.resolve('../../config/webpack.app'))
 
     function step2 () {
       if (fs.existsSync(APP_BUILD_ENTRY)) {
         console.log(' --- building the app --- ');
-        webpackBuild(appBuildConfig, done);
+        webpackBuild(appConfig, done);
       } else {
         done();
       }
@@ -37,7 +30,7 @@ module.exports = (args, done) => {
 
     if (fs.existsSync(UMD_BUILD_ENTRY)) {
       console.log(' --- building the umd ---');
-      webpackBuild(umdBuildConfig, step2);
+      webpackBuild(umdConfig, step2);
     } else {
       step2();
     }

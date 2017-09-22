@@ -6,9 +6,9 @@
 
 ## What is it about?
 
-This library allows you to create React modules with no configuration needed.
+This library allows you to create "React modules" with zero configuration needed.
 
-## What do you mean with "React modules"
+## What do you mean with "React modules"?
 
 We mean a project that:
 
@@ -23,79 +23,67 @@ npm install workshare/scv
 node_modules/.bin/scv init # and follow the prompts
 ```
 
-## What features I get for free in my project?
+Is important to notice that your new project doesn't contain any configuration file, it just works.
+
+## What features I get for free in my new project?
 
 - React
 - Webpack
 - Webpack DLL
-- Webpack API proxy (you need to tell what to proxy though)
+- Webpack proxy (you need to tell what to proxy though)
 - react-hot-loader 3.0
-- Babel, ES2015 + modules, Stage 0 preset
+- Babel with ES2015, Stage 0 and React presets
 - Tests and coverage with Jest
 - Enzyme
 - CSS modules
 - ESLint
 
-## How to work with the created project?
+## How to work with my new project?
 
 - Serve your "web application" on a devServer with hot-reload using `npm run start`, the entry point of your "web application" is `src/app.js`.
-- Add as much code as you want in `src/` and `tests/`.
-- Run tests with `npm run test`.
-- Do some ES6 export in `src/module/index.js` to make the exported objects available to the users of your "library".
-- Distribute both the "web application" and the "library" with `npm run build`.
-
-## What if I don't care about the "web application" part of the build?
-
-You can delete the file `src/app.js` and forget about it, you will only get the UMD part when running `npm run build`
-
-## What if I don't care about the "library" part of the build?
-
-You can delete the file `src/module/index.js` and forget about it, you will only get the "React web application" part when running `npm run build`
+- Add your code in `src/` and `tests/`.
+- Run your tests with `npm run test`.
+- Do some ES6 exports in `src/module/index.js` to make the exported objects available to the users of your "library".
+- Distribute both the "web application" and the "library" running `npm run build`.
 
 ## Info about the build result
 
 Running `npm run build` will produce
 
-- A folder `build/app` containing your web application, serve the content of this folder on any web server and enjoy
+- A folder `build/app` containing your web application, serve the content of this folder on a web server and enjoy
 - A folder `build/umd` containing the transpiled code of your library
 
-## Info about your project content
+## What if I don't care about the "web application" part of the build?
 
-If it wasn't clear yet
+You can delete the file `src/app.js` and forget about it, from now on, you will only get the UMD part when running `npm run build`
+
+## What if I don't care about the "library" part of the build?
+
+You can delete the file `src/module/index.js` and forget about it, from now on, you will only get the "React web application" part when running `npm run build`
+
+## Info about your new project contents
 
 - `src/app.js` is used as entry point to serve and build your project as a "web application", contents not included in this file will not be served by `npm run start` and will not be built by `npm run build`.
 - `src/module/index.js` is used as entry point for the "library" produced by `npm run build`, contents not included in this file will not be part of the "library".
 
-Delete one of this two files if you are not interested in its build result.
+The rest of the project should be self explanatory.
 
-Is important to notice that your project doesn't contain any configuration file, all the needed configuration files are inside the workshare-scv dependency.
+## Optional - Configuration, some basic stuff
 
-## (Optional) Configuration... If you want it so bad
+A subset of the module features can be configured directly through the `scv` section in the package.json:
 
-A subset of the module features can be configured directly through the `scv` section in the package.json
-
-here's the config section default content
-
-```
-"config": {
-  "appBuildEntry": "src/app.js",
-  "umdBuildEntry": "src/module/index.js"
-}
-```
-
-- appBuildEntry is the path of the entry point used by the webpack dev server when running `npm run start`
-- umdBuildEntry is the path of the entry point used by the webpack UMD build when running `npm run build`
-
-Another feature that can be configured from this section is a proxy for the http calls while the module is running through `npm run start`.
-Setting up a proxy during development could be useful for example to avoid CORS when contacting a server deployed on a different host and/or port.
-
-Following an example configuration for the proxy
-
-```
+```javascript
 "scv": {
-  "proxy": {
+  "appBuildEntry": "src/app.js", //the entry point of your web application
+  "umdBuildEntry": "src/module/index.js", //the entry point of your library
+  "html": { //doc here: https://github.com/jantimon/html-webpack-plugin#configuration
+    "title": "risk-analytics-ui",
+    "description": "components for risk analytics"
+  },
+  "proxy": { //doc here: https://webpack.github.io/docs/webpack-dev-server.html#proxy
     "/api": {
-      "target": "https://10.30.3.52/my-backend",
+      "target": "https://anIP/aContextPath",
+      "changeOrigin": true,
       "secure": false,
       "logLevel": "debug"
     }
@@ -103,25 +91,47 @@ Following an example configuration for the proxy
 }
 ```
 
-with this configuration all the http calls containing `/api` will be proxied to `https://10.30.3.52/my-backend`
+Please note that the proxy is only available during development (while you are running `npm run start`).
 
-e.g
+## Optional - Customize scv in your project (if you want that extra feature so bad)
 
-`http://localhost:3000/api/license`
+We try to give you complete freedom over what you can customize, all the configuration files used by the scv are at this path [`here`](https://github.com/workshare/scv/tree/master/config) before customizing something please take your time to have a look on what is there.
 
-will result in
+The following files can be overridden creating a file with the same name in your project under the `scv` folder:
 
-`https://10.30.3.52/my-backend/api/license`
+- `webpack.app.js` //used to build your web application during `npm run build`
+- `webpack.dev.js` //used to serve your application during `npm run start`
+- `webpack.umd.js` //used to build your library UMD during `npm run build`
+- `eslint.dev.js` //used to lint the code during `npm run start`
+- `eslint.prod.js` //used to lint the code during `npm run build`
+- `jest.js` //used to run the tests during `npm run test`
 
-invoked by the proxy.
+here an example of how to add a new plugin (`webpack-visualizer-plugin`) to the build configuration for the web application:
 
-Is important to notice that the proxy is only applied to the webpack dev server while running `npm run start`.
+    - create a folder named `scv` in the root of your project
+    - add a file named `webpack.app.js` the `scv` folder
+    - insert the following content inside the new `webpack.app.js`
 
-Additional info about the proxy configuration can be found [`here`](https://webpack.github.io/docs/webpack-dev-server.html#proxy)
+        ```javascript
+        let config = require('workshare-scv/config/webpack.app'); //retrieve the original webpack configuration object form the scv
+        const WebpackVisualizerPlugin = require('webpack-visualizer-plugin');
 
-## Info about browser globals
+        config.plugins.push(new WebpackVisualizerPlugin()); //modifies the webpack configuration object where needed
 
-When developing and running your module and with `npm run start` you will be able to access the globals presents in the 'babel-polyfill' and 'whatwg-fetch' npm modules (e.g Array.prototype.includes, window.fetch).
+        module.exports = config;
+        ```
+
+The same mechanism can be used to customize the other files.
+
+IMPORTANT - When overriding something please keep in mind that
+
+- you have to pay attention, we give you full freedom on what you can change, you are basically changing the scv code, this means, you might break something
+- don't go crazy, you will need to maintain your customizations, migrating to a future version of the scv might be difficult if you add too many features
+- if you think <<oh maaaan, that extra feature I just added is sooo gooood>> you might help the scv to include it in its the next release with a pull request instead of having a customization in your project 😎
+
+## Info about browser globals and your UMD
+
+When developing and running your module and with `npm run start` you will be able to access the globals presents in the 'babel-polyfill' and 'whatwg-fetch' npm modules (e.g window.fetch).
 When you are distributing your UMD with `npm run build` the UMD will not contains 'babel-polyfill' and 'whatwg-fetch', so if you used any of these globals in your UMD code the environment where the UMD is running must provide them.
 
 ## Extra info

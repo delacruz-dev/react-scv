@@ -1,5 +1,6 @@
 'use strict';
 
+const overrides = require('../src/overrides');
 const Clean = require('clean-webpack-plugin');
 const core = require('./webpack.core');
 const merge = require('webpack-merge');
@@ -9,6 +10,7 @@ const webpack = require('webpack');
 const CWD = process.cwd();
 const PACKAGE = require(path.join(CWD, 'package.json'));
 const UMD_SRC_FILE = path.join(CWD, PACKAGE.scv.umdBuildEntry);
+const SRC = path.dirname(UMD_SRC_FILE);
 const BUILD = path.join(CWD, 'build/umd');
 const nodeExternals = require('webpack-node-externals');
 
@@ -21,6 +23,20 @@ module.exports = merge(core, {
     library: PACKAGE.name,
     libraryTarget: 'umd',
     umdNamedDefine: true
+  },
+  module: {
+    rules: [
+      {
+        test: /\.jsx?$/,
+        enforce: "pre",
+        include: [SRC],
+        loader: 'eslint-loader',
+        options:{
+          configFile: overrides.filePath(path.join(__dirname, 'eslint.prod.js')),
+          useEslintrc: false
+        }
+      },
+    ]
   },
   externals: [nodeExternals()],
   plugins: [

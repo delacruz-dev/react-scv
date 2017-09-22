@@ -51,16 +51,6 @@ module.exports = {
       {
           test: /\.jsx?$/,
           enforce: "pre",
-          include: [SRC],
-          loader: 'eslint-loader',
-          options:{
-            configFile: path.join(__dirname, 'eslint.dev.js'),
-            useEslintrc: false
-          }
-      },
-      {
-          test: /\.jsx?$/,
-          enforce: "pre",
           use: [
             {loader: 'source-map-loader'}
           ]

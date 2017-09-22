@@ -1,5 +1,6 @@
 'use strict';
 
+const overrides = require('../src/overrides');
 const Clean = require('clean-webpack-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
 const core = require('./webpack.core');
@@ -10,6 +11,7 @@ const webpack = require('webpack');
 const CWD = process.cwd();
 const PACKAGE = require(path.join(CWD, 'package.json'));
 const APP_SRC_FILE = path.join(CWD, PACKAGE.scv.appBuildEntry);
+const SRC = path.dirname(APP_SRC_FILE);
 const BUILD = path.join(CWD, 'build/app');
 
 module.exports = merge(core, {
@@ -18,6 +20,20 @@ module.exports = merge(core, {
   output: {
     path: BUILD,
     filename: 'app.js'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.jsx?$/,
+        enforce: "pre",
+        include: [SRC],
+        loader: 'eslint-loader',
+        options:{
+          configFile: overrides.filePath(path.join(__dirname, 'eslint.prod.js')),
+          useEslintrc: false
+        }
+      },
+    ]
   },
   plugins: [
     new Clean([BUILD], {

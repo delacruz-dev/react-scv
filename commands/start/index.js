@@ -1,5 +1,6 @@
 'use strict';
 
+const overrides = require('../../src/overrides');
 const DevServer = require('webpack-dev-server');
 const path = require('path');
 const fs = require('fs');
@@ -16,9 +17,7 @@ module.exports = (args, done) => {
 
       const port = args.options.port;
       const flow = args.options.flow;
-      const config = args.options.config ?
-          require(path.resolve(process.cwd(), args.options.config)) :
-          require('../../config/webpack.dev');
+      const config = overrides.require(require.resolve('../../config/webpack.dev'));
 
       const schema = config.devServer.https ? 'https' : 'http';
       const host = config.devServer.host || 'localhost';

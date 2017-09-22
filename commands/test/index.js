@@ -1,7 +1,8 @@
 'use strict';
 
+const overrides = require('../../src/overrides');
 const path = require('path');
-const CONFIG_FILE_PATH = path.join(__dirname, '../../config/jest.js');
+const CONFIG_FILE_PATH = overrides.filePath(path.join(__dirname, '../../config/jest.js'));
 const jest = require('jest');
 
 module.exports = (args, done) => {
