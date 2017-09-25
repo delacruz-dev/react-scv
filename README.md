@@ -80,18 +80,19 @@ A subset of the module features can be configured directly through the `scv` sec
     "title": "risk-analytics-ui",
     "description": "components for risk analytics"
   },
-  "proxy": { //doc here: https://webpack.github.io/docs/webpack-dev-server.html#proxy
-    "/api": {
-      "target": "https://anIP/aContextPath",
-      "changeOrigin": true,
-      "secure": false,
-      "logLevel": "debug"
+  "devServer":{
+    "port": 4000
+    "proxy": { //doc here: https://webpack.github.io/docs/webpack-dev-server.html#proxy
+      "/api": {
+        "target": "https://anIP/aContextPath",
+        "changeOrigin": true,
+        "secure": false,
+        "logLevel": "debug"
+      }
     }
   }
 }
 ```
-
-Please note that the proxy is only available during development (while you are running `npm run start`).
 
 ## Optional - Customize scv in your project (if you want that extra feature so bad)
 
@@ -127,7 +128,7 @@ IMPORTANT - When overriding something please keep in mind that
 
 - you have to pay attention, we give you full freedom on what you can change, you are basically changing the scv code, this means, you might break something
 - don't go crazy, you will need to maintain your customizations, migrating to a future version of the scv might be difficult if you add too many features
-- if you think <<oh maaaan, that extra feature I just added is sooo gooood>> you might help the scv to include it in its the next release with a pull request instead of having a customization in your project 😎
+- if you think <<oh maaaan, that extra feature I just added is sooo gooood>> you might help the scv to include it in its the next release with a pull request instead of having a customization in your project 😊
 
 ## Info about browser globals and your UMD
 

@@ -3,6 +3,7 @@
 const overrides = require('../src/overrides');
 
 const core = require('./webpack.core');
+const deepmerge = require('deepmerge');
 const merge = require('webpack-merge');
 const path = require('path');
 const webpack = require('webpack');
@@ -10,7 +11,7 @@ const webpack = require('webpack');
 const CWD = process.cwd();
 const PACKAGE = require(path.join(CWD, 'package.json'));
 const SRC_FILE = path.join(CWD, PACKAGE.scv.appBuildEntry);
-const PROXY_CONFIG = PACKAGE.scv.proxy;
+const DEV_SERVER = PACKAGE.scv.devServer || {};
 const SRC = path.dirname(SRC_FILE);
 const HtmlPlugin = require('html-webpack-plugin');
 
@@ -51,7 +52,7 @@ let devConfig = merge(core, {
       },
     ]
   },
-  devServer: {
+  devServer: deepmerge({
     contentBase: [path.join(process.cwd(), 'src'), path.join(process.cwd(), 'build/app')],
 
     // Enable history API fallback so HTML5 History API based
@@ -67,11 +68,7 @@ let devConfig = merge(core, {
 
     disableHostCheck: true
 
-  }
+  },DEV_SERVER)
 });
-
-if(PROXY_CONFIG){
-  devConfig.devServer.proxy = PROXY_CONFIG;
-}
 
 module.exports = devConfig;

@@ -6,6 +6,10 @@ const path = require('path');
 const fs = require('fs');
 const FlowStatusWebpackPlugin = require('flow-status-webpack-plugin');
 const CWD = process.cwd();
+const PACKAGE = require(path.join(CWD, 'package.json'));
+const devServer = PACKAGE.scv.devServer || {};
+const port = devServer.port;
+const flow = devServer.flow;
 const FLOW_EXE = path.join(CWD, 'node_modules/.bin/flow');
 const FLOW_TARGET = path.join(CWD ,'/node_modules/workshare-scv/config/');
 const webpack = require('webpack');
@@ -13,10 +17,12 @@ const buildDllIfNotPresent = require('../../src/buildDllIfNotPresent');
 
 module.exports = (args, done) => {
 
+  if(!port) {
+      throw new Error('Please specify a port for the dev server in your package.json => src.devServer.port property');
+  }
+
   buildDllIfNotPresent(()=>{
 
-      const port = args.options.port;
-      const flow = args.options.flow;
       const config = overrides.require(require.resolve('../../config/webpack.dev'));
 
       const schema = config.devServer.https ? 'https' : 'http';

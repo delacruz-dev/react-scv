@@ -11,11 +11,14 @@
     "html": {
       "title": "<%= data.appTitle %>",
       "description": "<%= data.description %>"
+    },
+    "devServer": {
+      "port": "<%= data.port %>"
     }
   },
   "scripts": {
     "build": "scv build",
-    "start": "scv start --port <%= data.port %>",
+    "start": "scv start",
     "test": "scv test",
     "postinstall": "scv dll"
   },
