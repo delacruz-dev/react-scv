@@ -103,6 +103,7 @@ The following files can be overridden creating a file with the same name in your
 - `webpack.app.js` //used to build your web application during `npm run build`
 - `webpack.dev.js` //used to serve your application during `npm run start`
 - `webpack.umd.js` //used to build your library UMD during `npm run build`
+- `dlls.js` //the npm dependencies that will be included in the webpack DLLs during `npm run build` and `npm run start`
 - `eslint.dev.js` //used to lint the code during `npm run start`
 - `eslint.prod.js` //used to lint the code during `npm run build`
 - `jest.js` //used to run the tests during `npm run test`

@@ -1,5 +1,6 @@
 'use strict';
 
+const overrides = require('../src/overrides');
 const core = require('./webpack.core');
 const merge = require('webpack-merge');
 const path = require('path');
@@ -8,27 +9,11 @@ const webpack = require('webpack');
 
 const CWD = process.cwd();
 const BUILD = path.join(CWD, 'build/app');
-
-//todo NOTE: do not include react-hot-loader in the dll https://github.com/gaearon/react-hot-loader/issues/627
-let dllModules = getOnlyInstalledModules(['cookies-js', 'mixpanel-browser', 'moment', 'query-string', 'react', 'react-addons-test-utils', 'react-datetime', 'react-dom', 'react-router', 'validator',
-    'babel-polyfill', 'whatwg-fetch', 'sockjs-client', 'querystring-es3', 'ansi-html', 'html-entities', 'punycode', 'events']);
-
-function getOnlyInstalledModules (modules) {
-    let result = [];
-    modules.forEach((module) => {
-        const moduleFolderPath = path.join(process.cwd(), path.join('node_modules', module));
-        if (fs.existsSync(moduleFolderPath)) {
-            result.push(module);
-        }
-    });
-    return result;
-}
+const dlls = overrides.require(require.resolve('./dlls'));
 
 const config = merge(core, {
     entry: {
-        'app': dllModules.concat([
-            'lodash/cloneDeep', 'lodash/merge', 'lodash/isEqual'
-        ]),
+        'app': dlls,
     },
     output: {
         filename: '[name]-dll.js',
