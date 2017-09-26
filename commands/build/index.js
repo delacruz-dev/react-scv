@@ -9,8 +9,8 @@ const fs = require('fs');
 
 const CWD = process.cwd();
 const PACKAGE = require(path.join(CWD, 'package.json'));
-const APP_BUILD_ENTRY = path.join(CWD, PACKAGE.scv.appBuildEntry);
-const UMD_BUILD_ENTRY = path.join(CWD, PACKAGE.scv.umdBuildEntry);
+const APP_BUILD_ENTRY = path.join(CWD, PACKAGE["react-scv"].appBuildEntry);
+const UMD_BUILD_ENTRY = path.join(CWD, PACKAGE["react-scv"].umdBuildEntry);
 
 module.exports = (args, done) => {
 

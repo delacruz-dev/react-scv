@@ -1,10 +1,7 @@
 {
-  "name": "workshare-scv",
-  "version": "2.0.1",
-  "engines": {
-    "node": ">=4.4.0"
-  },
-  "description": "Create and build React modules with zero initial configuration and minimal fuss",
+  "name": "react-scv",
+  "version": "0.0.1",
+  "description": "Create React modules with zero configuration needed",
   "files": [
     "bin",
     "build",
@@ -14,17 +11,7 @@
     "utils"
   ],
   "bin": {
-    "scv": "./bin/scv"
-  },
-  "scripts": {
-    "test": "npm explore $(node fixture) -- 'npm install && npm test'"
-  },
-  "babel": {
-    "presets": [
-      "es2015",
-      "stage-0",
-      "react"
-    ]
+    "react-scv": "./bin/react-scv"
   },
   "commands": [
     {
@@ -63,16 +50,15 @@
     },
     {
       "name": "dll",
-      "description": "used internally by the scv to make the startup time of the dev server faster"
+      "description": "used internally by react-scv to make the startup time of the dev server faster"
     }
   ],
   "keywords": [
     "react",
-    "redux",
     "webpack"
   ],
-  "author": "Eli Perelman <eli@eliperelman.com> (http://eliperelman.com/)",
-  "license": "MPL-2.0",
+  "author": "Marcello Montemagno (http://www.curlycoding.com/)",
+  "license": "MIT",
   "dependencies": {
     "babel-core": "6.14.0",
     "babel-eslint": "6.1.2",

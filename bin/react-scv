@@ -18,7 +18,7 @@ let registerCliCommand = (command) => {
   const dir = path.resolve(__dirname, `../commands/${name}`);
 
   if (generator) {
-    env.register(require.resolve(dir), `scv:${name}`);
+    env.register(require.resolve(dir), `react-scv:${name}`);
   }
 
   let cliCommand = cli.command(name, command.description);
@@ -51,7 +51,7 @@ let registerCliCommand = (command) => {
       process.env.NODE_ENV = command.environment || 'development';
 
       if (generator) {
-        env.run(`scv:${name}`, done);
+        env.run(`react-scv:${name}`, done);
       } else {
         require(dir)(args, done);
       }

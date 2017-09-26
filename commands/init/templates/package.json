@@ -5,7 +5,7 @@
   "description": "<%= data.description %>",
   "main": "./build/umd.js",
   "module": "./src/module/index.js",
-  "scv": {
+  "react-scv": {
     "appBuildEntry": "src/app.js",
     "umdBuildEntry": "src/module/index.js",
     "html": {
@@ -17,14 +17,14 @@
     }
   },
   "scripts": {
-    "build": "scv build",
-    "start": "scv start",
-    "test": "scv test",
-    "postinstall": "scv dll"
+    "build": "react-scv build",
+    "start": "react-scv start",
+    "test": "react-scv test",
+    "postinstall": "react-scv dll"
   },
   "keywords": [],
   "devDependencies": {
-    "workshare-scv": "git@github.com:workshare/scv"
+    "react-scv": "git@github.com:marcellomontemagno/react-scv"
   },
   "dependencies": {
     "react": "15.4.2",

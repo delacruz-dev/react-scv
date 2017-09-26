@@ -7,11 +7,11 @@ const fs = require('fs');
 const FlowStatusWebpackPlugin = require('flow-status-webpack-plugin');
 const CWD = process.cwd();
 const PACKAGE = require(path.join(CWD, 'package.json'));
-const devServer = PACKAGE.scv.devServer || {};
+const devServer = PACKAGE["react-scv"].devServer || {};
 const port = devServer.port;
 const flow = devServer.flow;
 const FLOW_EXE = path.join(CWD, 'node_modules/.bin/flow');
-const FLOW_TARGET = path.join(CWD ,'/node_modules/workshare-scv/config/');
+const FLOW_TARGET = path.join(CWD ,'/node_modules/react-scv/config/');
 const webpack = require('webpack');
 const buildDllIfNotPresent = require('../../src/buildDllIfNotPresent');
 

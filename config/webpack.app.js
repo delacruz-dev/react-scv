@@ -10,7 +10,7 @@ const webpack = require('webpack');
 
 const CWD = process.cwd();
 const PACKAGE = require(path.join(CWD, 'package.json'));
-const APP_SRC_FILE = path.join(CWD, PACKAGE.scv.appBuildEntry);
+const APP_SRC_FILE = path.join(CWD, PACKAGE["react-scv"].appBuildEntry);
 const SRC = path.dirname(APP_SRC_FILE);
 const BUILD = path.join(CWD, 'build/app');
 
@@ -54,6 +54,6 @@ module.exports = merge(core, {
       template: path.join(__dirname, '../src/template.ejs'),
       hash: true,
       xhtml: true
-    }, PACKAGE.scv.html || {}))
+    }, PACKAGE["react-scv"].html || {}))
   ]
 });

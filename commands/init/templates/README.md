@@ -22,4 +22,4 @@ Build the application.
 
 ## Configuration
 
-For any extra info https://github.com/workshare/scv
+For any extra info https://github.com/marcellomontemagno/react-scv

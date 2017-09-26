@@ -2,7 +2,7 @@
   <img src="scv.jpeg" height="96" />
 </p>
 
-<p align="center">Create React modules with zero configuration needed.</p>
+<p align="center">Create React modules with zero configuration needed</p>
 
 ## What is it about?
 
@@ -19,8 +19,8 @@ We mean a project that:
 
 ```bash
 mkdir -p <project-name>/node_modules && cd <project-name>
-npm install workshare/scv
-node_modules/.bin/scv init # and follow the prompts
+npm install marcellomontemagno/react-scv
+node_modules/.bin/react-scv init # and follow the prompts
 ```
 
 Is important to notice that your new project doesn't contain any configuration file, it just works.
@@ -70,10 +70,10 @@ The rest of the project should be self explanatory.
 
 ## Optional - Configuration, some basic stuff
 
-A subset of the module features can be configured directly through the `scv` section in the package.json:
+A subset of the module features can be configured directly through the `react-scv` section in the package.json:
 
 ```javascript
-"scv": {
+"react-scv": {
   "appBuildEntry": "src/app.js", //the entry point of your web application
   "umdBuildEntry": "src/module/index.js", //the entry point of your library
   "html": { //doc here: https://github.com/jantimon/html-webpack-plugin#configuration
@@ -94,11 +94,11 @@ A subset of the module features can be configured directly through the `scv` sec
 }
 ```
 
-## Optional - Customize scv in your project (if you want that extra feature so bad)
+## Optional - Customize react-scv in your project (if you want that extra feature so bad)
 
-We try to give you complete freedom over what you can customize, all the configuration files used by the scv are at this path [`here`](https://github.com/workshare/scv/tree/master/config) before customizing something please take your time to have a look on what is there.
+We try to give you complete freedom over what you can customize, all the configuration files used by react-scv are at this path [`here`](https://github.com/marcellomontemagno/react-scv/tree/master/config) before customizing something please take your time to have a look on what is there.
 
-The following files can be overridden creating a file with the same name in your project under the `scv` folder:
+The following files can be overridden creating a file with the same name in your project under the `react-scv` folder:
 
 - `webpack.app.js` //used to build your web application during `build`
 - `webpack.dev.js` //used to serve your application during `start`
@@ -110,32 +110,28 @@ The following files can be overridden creating a file with the same name in your
 
 here an example of how to add a new plugin (`webpack-visualizer-plugin`) to the build configuration for the web application:
 
-    - create a folder named `scv` in the root of your project
-    - add a file named `webpack.app.js` in the `scv` folder
+    - create a folder named `react-scv` in the root of your project
+    - add a file named `webpack.app.js` in the `react-scv` folder
     - insert the following content inside the new `webpack.app.js`
 
-        ```javascript
-        let config = require('workshare-scv/config/webpack.app'); //retrieve the original webpack configuration object form the scv
-        const WebpackVisualizerPlugin = require('webpack-visualizer-plugin');
+```javascript
+let config = require('react-scv/config/webpack.app'); //retrieve the original webpack configuration object form react-scv
+const WebpackVisualizerPlugin = require('webpack-visualizer-plugin');
 
-        config.plugins.push(new WebpackVisualizerPlugin()); //modifies the webpack configuration object where needed
+config.plugins.push(new WebpackVisualizerPlugin()); //modifies the webpack configuration object where needed
 
-        module.exports = config;
-        ```
+module.exports = config;
+```
 
 The same mechanism can be used to customize the other listed files.
 
 IMPORTANT - When overriding something please keep in mind that
 
-- you have to pay attention, we give you full freedom on what you can change, you are basically changing the scv code, this means, you might break something
-- don't go crazy, you will need to maintain your customizations, migrating to a future version of the scv might be difficult if you add too many features
-- if you think <<oh maaaan, that extra feature I just added is sooo gooood>> you might help the scv to include it in its the next release with a pull request instead of having a customization in your project 😊
+- you have to pay attention, we give you full freedom on what you can change, you are basically changing the react-scv code, this means, you might break something
+- don't go crazy, you will need to maintain your customizations, migrating to a future version of react-scv might be difficult if you add too many features
+- if you think <<oh maaaan, that extra feature I just added is sooo gooood>> you might help react-scv to include it in its the next release with a pull request instead of having a customization in your project 😊
 
 ## Info about browser globals and your UMD
 
 When developing and running your module and with `npm run start` you will be able to access the globals presents in the 'babel-polyfill' and 'whatwg-fetch' npm modules (e.g window.fetch).
 When you are distributing your UMD with `npm run build` the UMD will not contains 'babel-polyfill' and 'whatwg-fetch', so if you used any of these globals in your UMD code the environment where the UMD is running must provide them.
-
-## Extra info
-
-This project is a workshare customization/extension of [`mozilla-neo`](https://github.com/mozilla/neo/)

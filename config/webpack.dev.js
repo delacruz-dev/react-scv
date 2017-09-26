@@ -10,8 +10,8 @@ const webpack = require('webpack');
 
 const CWD = process.cwd();
 const PACKAGE = require(path.join(CWD, 'package.json'));
-const SRC_FILE = path.join(CWD, PACKAGE.scv.appBuildEntry);
-const DEV_SERVER = PACKAGE.scv.devServer || {};
+const SRC_FILE = path.join(CWD, PACKAGE["react-scv"].appBuildEntry);
+const DEV_SERVER = PACKAGE["react-scv"].devServer || {};
 const SRC = path.dirname(SRC_FILE);
 const HtmlPlugin = require('html-webpack-plugin');
 
@@ -23,7 +23,7 @@ let devConfig = merge(core, {
       template: path.join(__dirname, '../src/template.ejs'),
       hash: true,
       xhtml: true
-    }, PACKAGE.scv.html || {})),
+    }, PACKAGE["react-scv"].html || {})),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
       minChunks: Infinity,

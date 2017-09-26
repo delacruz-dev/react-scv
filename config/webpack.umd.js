@@ -9,7 +9,7 @@ const webpack = require('webpack');
 
 const CWD = process.cwd();
 const PACKAGE = require(path.join(CWD, 'package.json'));
-const UMD_SRC_FILE = path.join(CWD, PACKAGE.scv.umdBuildEntry);
+const UMD_SRC_FILE = path.join(CWD, PACKAGE["react-scv"].umdBuildEntry);
 const SRC = path.dirname(UMD_SRC_FILE);
 const BUILD = path.join(CWD, 'build/umd');
 const nodeExternals = require('webpack-node-externals');
