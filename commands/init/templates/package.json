@@ -1,7 +1,7 @@
 {
   "name": "<%= data.packageName %>",
   "private": true,
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "<%= data.description %>",
   "main": "./build/umd.js",
   "module": "./src/module/index.js",
@@ -24,7 +24,7 @@
   },
   "keywords": [],
   "devDependencies": {
-    "react-scv": "git@github.com:marcellomontemagno/react-scv"
+    "react-scv": "0.0.2"
   },
   "dependencies": {
     "react": "15.4.2",

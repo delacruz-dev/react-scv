@@ -1,6 +1,6 @@
 {
   "name": "react-scv",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "Create React modules with zero configuration needed",
   "files": [
     "bin",
@@ -45,7 +45,7 @@
       "description": "Run the project's tests",
       "environment": "test",
       "options": {
-        "other arguments" : "any valid Jest argument can be used e.g 'npm run test -- --watch'"
+        "other arguments": "any valid Jest argument can be used e.g 'npm run test -- --watch'"
       }
     },
     {
@@ -53,9 +53,19 @@
       "description": "used internally by react-scv to make the startup time of the dev server faster"
     }
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marcellomontemagno/react-scv.git"
+  },
+  "bugs": {
+    "url": "https://github.com/marcellomontemagno/react-scv/issues"
+  },
+  "homepage": "https://github.com/marcellomontemagno/react-scv",
   "keywords": [
     "react",
-    "webpack"
+    "webpack",
+    "module",
+    "zero-configuration"
   ],
   "author": "Marcello Montemagno (http://www.curlycoding.com/)",
   "license": "MIT",

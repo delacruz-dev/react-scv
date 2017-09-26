@@ -19,7 +19,7 @@ We mean a project that:
 
 ```bash
 mkdir -p <project-name>/node_modules && cd <project-name>
-npm install marcellomontemagno/react-scv
+npm install react-scv
 node_modules/.bin/react-scv init # and follow the prompts
 ```
 
