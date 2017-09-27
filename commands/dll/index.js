@@ -2,11 +2,16 @@
 
 const dllConfig = require('../../config/webpack.dll');
 const webpackBuild = require('../../src/webpackBuild');
+const fs = require('fs');
 
 module.exports = (args, done) => {
 
-  console.log(' --- building the dll --- ');
+  if (fs.existsSync('./node_modules')) {
 
-  webpackBuild(dllConfig, done);
+    console.log(' --- building the dll --- ');
+
+    webpackBuild(dllConfig, done);
+
+  }
 
 };
