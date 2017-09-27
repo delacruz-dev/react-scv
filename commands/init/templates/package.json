@@ -3,8 +3,7 @@
   "private": true,
   "version": "0.0.1",
   "description": "<%= data.description %>",
-  "main": "./build/umd.js",
-  "module": "./src/module/index.js",
+  "main": "./build/umd/umd.js",
   "react-scv": {
     "appBuildEntry": "src/app.js",
     "umdBuildEntry": "src/module/index.js",
