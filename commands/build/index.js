@@ -14,6 +14,8 @@ const UMD_BUILD_ENTRY = path.join(CWD, PACKAGE["react-scv"].umdBuildEntry);
 
 module.exports = (args, done) => {
 
+  process.on('SIGINT', done);
+
   buildDllIfNotPresent(() => {
 
     const umdConfig = overrides.require(require.resolve('../../config/webpack.umd'));
