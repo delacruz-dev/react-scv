@@ -3,6 +3,7 @@
 const overrides = require('../src/overrides');
 const Clean = require('clean-webpack-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
+const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 const core = require('./webpack.core');
 const merge = require('webpack-merge');
 const path = require('path');
@@ -54,6 +55,11 @@ module.exports = merge(core, {
       template: path.join(__dirname, '../src/template.ejs'),
       hash: true,
       xhtml: true
-    }, PACKAGE["react-scv"].html || {}))
+    }, PACKAGE["react-scv"].html || {})),
+    new AddAssetHtmlPlugin({
+      filepath: path.join(CWD, 'build/app/app-dll.js'),
+      includeSourcemap: false,
+      hash: true,
+    })
   ]
 });

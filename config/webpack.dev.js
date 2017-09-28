@@ -14,6 +14,7 @@ const SRC_FILE = path.join(CWD, PACKAGE["react-scv"].appBuildEntry);
 const DEV_SERVER = PACKAGE["react-scv"].devServer || {};
 const SRC = path.dirname(SRC_FILE);
 const HtmlPlugin = require('html-webpack-plugin');
+const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 
 let devConfig = merge(core, {
   entry: ['babel-polyfill', 'whatwg-fetch', SRC_FILE],
@@ -24,6 +25,11 @@ let devConfig = merge(core, {
       hash: true,
       xhtml: true
     }, PACKAGE["react-scv"].html || {})),
+    new AddAssetHtmlPlugin({
+      filepath: path.join(CWD, 'build/app/app-dll.js'),
+      includeSourcemap: false,
+      hash: true,
+    }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
       minChunks: Infinity,
