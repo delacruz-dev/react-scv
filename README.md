@@ -30,12 +30,13 @@ Is important to notice that your new project doesn't contain any configuration f
 - React
 - Webpack
 - Webpack DLLs
-- Webpack proxy (you need to tell what to proxy though)
+- Webpack proxy (useful to avoid CORS during development)
 - react-hot-loader 3.0
 - Babel with ES2015, Stage 0 and React presets
 - Tests and coverage with Jest
 - Enzyme
-- CSS modules
+- Sass
+- CSS modules (for files with extension .cssm or .scssm)
 - ESLint
 
 ## How to work with my new project?
@@ -77,8 +78,8 @@ A subset of the module features can be configured directly through the `react-sc
   "appBuildEntry": "src/app.js", //the entry point of your web application
   "umdBuildEntry": "src/module/index.js", //the entry point of your library
   "html": { //doc here: https://github.com/jantimon/html-webpack-plugin#configuration
-    "title": "risk-analytics-ui",
-    "description": "components for risk analytics"
+    "title": "the title of your app",
+    "description": "the description of your app"
   },
   "devServer":{
     "port": "4000",
@@ -96,7 +97,7 @@ A subset of the module features can be configured directly through the `react-sc
 
 ## Optional - Customize react-scv in your project (if you want that extra feature so bad)
 
-We try to give you complete freedom over what you can customize, all the configuration files used by react-scv are at this path [`here`](https://github.com/marcellomontemagno/react-scv/tree/master/config) before customizing something please take your time to have a look on what is there.
+We try to give you complete freedom over what you can customize, all the configuration files used by react-scv are at this path <a href="https://github.com/marcellomontemagno/react-scv/tree/master/config" target="_blank">here</a> before customizing something please take your time to have a look on what is there.
 
 The following files can be overridden creating a file with the same name in your project under the `react-scv` folder:
 
@@ -110,9 +111,9 @@ The following files can be overridden creating a file with the same name in your
 
 here an example of how to add a new plugin (`webpack-visualizer-plugin`) to the build configuration for the web application:
 
-    - create a folder named `react-scv` in the root of your project
-    - add a file named `webpack.app.js` in the `react-scv` folder
-    - insert the following content inside the new `webpack.app.js`
+- create a folder named `react-scv` in the root of your project
+- add a file named `webpack.app.js` in the `react-scv` folder
+- insert the following content inside the new `webpack.app.js`
 
 ```javascript
 let config = require('react-scv/config/webpack.app'); //retrieve the original webpack configuration object form react-scv
