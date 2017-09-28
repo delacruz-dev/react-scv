@@ -81,7 +81,8 @@ module.exports = {
               localIdentName: '[name]_[local]_[hash:base64:3]'
             }
           },
-          {loader: 'sass-loader'},
+          {loader: 'resolve-url-loader'},
+          {loader: 'sass-loader?sourceMap'}
         ]
       },
       {
