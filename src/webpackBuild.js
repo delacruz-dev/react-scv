@@ -11,7 +11,7 @@ module.exports = function webpackBuild (config, cb) {
         console.error(err.details);
       }
     }
-    cb();
+    setTimeout(cb, 0); //because apparently some webpack plugin might schedule some async work
   });
 
 }
