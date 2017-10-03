@@ -1,17 +1,28 @@
 const webpack = require('webpack');
 
-module.exports = function webpackBuild (config, cb) {
+module.exports = function webpackBuild (config) {
 
-  webpack(config, (err, stats) => {
-    if (!err) {
-      console.log(stats.toString({colors: true}));
-    } else {
-      console.error(err.stack || err);
-      if (err.details) {
-        console.error(err.details);
+  return new Promise((resolve, reject) => {
+
+    webpack(config, (err, stats) => {
+      if (err || stats.hasErrors()) {
+        if (err) {
+          console.error(err.stack || err);
+          if (err.details) {
+            console.error(err.details);
+          }
+        } else if (stats.hasErrors()) {
+          console.log(stats.toString({colors: true}));
+        }
+        reject();
+      } else {
+        console.log(stats.toString({colors: true}));
+        setTimeout(() => { //because apparently some webpack plugin might schedule some async work
+          resolve();
+        }, 0);
       }
-    }
-    setTimeout(cb, 0); //because apparently some webpack plugin might schedule some async work
+    });
+
   });
 
 }

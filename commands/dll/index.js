@@ -12,7 +12,7 @@ module.exports = (args, done) => {
 
     console.log(' --- building the dll --- ');
 
-    webpackBuild(dllConfig, done);
+    return webpackBuild(dllConfig).then(done);
 
   }
 

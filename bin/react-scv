@@ -24,38 +24,48 @@ let registerCliCommand = (command) => {
   let cliCommand = cli.command(name, command.description);
 
   Object
-    .keys(options)
-    .map(option => {
-      if (Array.isArray(options[option])) {
-        cliCommand.option.apply(cliCommand, [option].concat(options[option]));
-      } else {
-        cliCommand.option(option, options[option]);
-      }
-    });
+  .keys(options)
+  .map(option => {
+    if (Array.isArray(options[option])) {
+      cliCommand.option.apply(cliCommand, [option].concat(options[option]));
+    } else {
+      cliCommand.option(option, options[option]);
+    }
+  });
 
   cliCommand
-    .action(function(args) {
-      const done = (exitCode) => process.exit(exitCode || 0);
+  .action(function (args) {
 
-      if (this.commandObject._events) {
-        const options = Object
-          .keys(this.commandObject._events)
-          .reduce((base, key) => {
-            base[key] = this.commandObject[key];
-            return base;
-          }, {});
+    const done = (exitCode) => {
+      process.exit(exitCode || 0)
+    };
 
-        args.options = Object.assign(options, args.options);
+    if (this.commandObject._events) {
+      const options = Object
+      .keys(this.commandObject._events)
+      .reduce((base, key) => {
+        base[key] = this.commandObject[key];
+        return base;
+      }, {});
+
+      args.options = Object.assign(options, args.options);
+    }
+
+    process.env.NODE_ENV = command.environment || 'development';
+
+    if (generator) {
+      env.run(`react-scv:${name}`, done);
+    } else {
+
+      const promise = require(dir)(args, done);
+      if (promise) {
+        promise.catch(() => {
+          done(1);
+        });
       }
 
-      process.env.NODE_ENV = command.environment || 'development';
-
-      if (generator) {
-        env.run(`react-scv:${name}`, done);
-      } else {
-        require(dir)(args, done);
-      }
-    });
+    }
+  });
 };
 
 commands.map(registerCliCommand);

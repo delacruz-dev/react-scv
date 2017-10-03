@@ -3,22 +3,26 @@ const dllConfig = require('../config/webpack.dll');
 const fs = require('fs');
 const path = require('path');
 
-module.exports = function buildDllIfNotPresent (cb) {
+module.exports = function () {
 
-  console.log(' --- checking dll existence --- ');
+  return new Promise((resolve) => {
 
-  if (!fs.existsSync(path.join(process.cwd(), 'build/app/app-dll-manifest.json')) || !fs.existsSync(path.join(process.cwd(), 'build/app/app-dll.js'))) {
+    console.log(' --- checking dll existence --- ');
 
-    console.log('dll not found');
+    if (!fs.existsSync(path.join(process.cwd(), 'build/app/app-dll-manifest.json')) || !fs.existsSync(path.join(process.cwd(), 'build/app/app-dll.js'))) {
 
-    console.log(' --- building dll ---');
+      console.log('dll not found');
 
-    webpackBuild(dllConfig, cb);
+      console.log(' --- building dll ---');
 
-  } else {
-    console.log('dll found, no need to build them again');
-    cb();
-  }
+      return webpackBuild(dllConfig);
+
+    } else {
+      console.log('dll found, no need to build them again');
+      resolve();
+    }
+
+  });
 
 }
 
