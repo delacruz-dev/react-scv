@@ -20,7 +20,7 @@ module.exports = {
 
 function moduleExists (name) {
   try {
-    require.resolve(name)
+    require.resolve(name);
   } catch (e) {
     return false
   }

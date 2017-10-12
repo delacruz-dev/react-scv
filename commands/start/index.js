@@ -1,6 +1,5 @@
 'use strict';
 
-const overrides = require('../../src/overrides');
 const DevServer = require('webpack-dev-server');
 const path = require('path');
 const fs = require('fs');
@@ -14,6 +13,7 @@ const FLOW_EXE = path.join(CWD, 'node_modules/.bin/flow');
 const FLOW_TARGET = path.join(CWD, '/node_modules/react-scv/config/');
 const webpack = require('webpack');
 const buildDllIfNotPresent = require('../../src/buildDllIfNotPresent');
+const middleware = require('../../src/middleware');
 
 module.exports = (args, done) => {
 
@@ -23,7 +23,7 @@ module.exports = (args, done) => {
       throw new Error('Please specify a port for the dev server in your package.json => src.devServer.port property');
     }
 
-    const config = overrides.require(require.resolve('../../config/webpack.dev'));
+    const config = middleware.applyMiddleware(require.resolve('../../config/webpack.dev'));
 
     const schema = config.devServer.https ? 'https' : 'http';
     const host = config.devServer.host || 'localhost';

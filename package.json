@@ -83,6 +83,7 @@
     "babel-runtime": "6.11.6",
     "clean-webpack-plugin": "0.1.10",
     "css-loader": "0.28.1",
+    "cursorify": "0.0.3",
     "deepmerge": "0.2.10",
     "empty": "0.10.1",
     "enzyme": "2.7.1",

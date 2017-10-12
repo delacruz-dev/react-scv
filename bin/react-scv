@@ -59,7 +59,10 @@ let registerCliCommand = (command) => {
 
       const promise = require(dir)(args, done);
       if (promise) {
-        promise.catch(() => {
+        promise.catch((error) => {
+          if(error) {
+            console.error(error)
+          }
           done(1);
         });
       }

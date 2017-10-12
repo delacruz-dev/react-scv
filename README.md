@@ -97,9 +97,9 @@ A subset of the module features can be configured directly through the `react-sc
 
 ## Optional - Customize react-scv in your project (if you want that extra feature so bad)
 
-We try to give you complete freedom over what you can customize, all the configuration files used by react-scv are at this path <a href="https://github.com/marcellomontemagno/react-scv/tree/master/config" target="_blank">here</a> before customizing something please take your time to have a look on what is there.
+All the configuration files used by react-scv are at this path <a href="https://github.com/marcellomontemagno/react-scv/tree/master/config" target="_blank">here</a> before customizing something please take your time to have a look on what is there.
 
-The following files can be overridden creating a file with the same name in your project under the `react-scv` folder:
+A subset of the configuration files can be extended/overridden, Here the files you can extend/override:
 
 - `webpack.app.js` //used to build your web application during `build`
 - `webpack.dev.js` //used to serve your application during `start`
@@ -109,24 +109,86 @@ The following files can be overridden creating a file with the same name in your
 - `eslint.prod.js` //used to lint the code during `build`
 - `jest.js` //used to run the tests during `test`
 
-here an example of how to add a new plugin (`webpack-visualizer-plugin`) to the build configuration for the web application:
+### overriding/extending `webpack.app.js`, `webpack.dev.js` or `webpack.umd.js`
 
-- create a folder named `react-scv` in the root of your project
-- add a file named `webpack.app.js` in the `react-scv` folder
-- insert the following content inside the new `webpack.app.js`
+- create a file with the same name under `yourProjectRoot/react-scv/`
+- the new file must export a function with this signature: `const newWebpackConfig = yourFunction(oldWebpackConfig, cursors);`
+
+Here an example of how to add a new loader to `webpack.app.js`
 
 ```javascript
-let config = require('react-scv/config/webpack.app'); //retrieve the original webpack configuration object form react-scv
+//this is the content of the file yourProjectRoot/react-scv/webpack.app.js
+
 const WebpackVisualizerPlugin = require('webpack-visualizer-plugin');
 
-config.plugins.push(new WebpackVisualizerPlugin()); //modifies the webpack configuration object where needed
-
-module.exports = config;
+module.exports = function(config){
+    config.plugins.push(new WebpackVisualizerPlugin()); //modifies the webpack configuration object where needed
+    return config;
+};
 ```
 
-The same mechanism can be used to customize the other listed files.
+We know that overriding webpack loaders and plugins can be difficult, for this reason we are providing [cursorify](https://github.com/marcellomontemagno/cursorify/) cursors as a second argument of the function you implement.
+Here an example of how to override a loader using a [cursorify](https://github.com/marcellomontemagno/cursorify/) cursor:
 
-IMPORTANT - When overriding something please keep in mind that
+```javascript
+//this is the content of the file yourProjectRoot/react-scv/webpack.app.js
+
+const setByCursor = require('cursorify').setByCursor;
+
+module.exports = function (config, cursors) {
+
+  const newSvgLoadingRule = {
+    test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+    loaders: [
+      'svg-inline-loader', {
+        loader: 'image-webpack-loader',
+        options: {
+          svgo: {
+            plugins: [
+              {
+                removeStyleElement: true
+              },
+              {
+                removeXMLNS: true
+              },
+              {
+                removeDimensions: true
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }
+
+  setByCursor(config, cursors['svg-rule'], newSvgLoadingRule); //overrides the existing rule using the cursor named 'svg-rule'
+
+  return config;
+
+};
+```
+
+### overriding/extending `jest.js`, `eslint.dev.js`, `eslint.prod.js` or `dlls.js`:
+
+- create a file with the same name under `yourProjectRoot/react-scv/`
+- the new file must export an object
+
+here an example of how to change change a rule in `eslint.dev.js`
+
+```javascript
+//this is the content of the file yourProjectRoot/react-scv/eslint.dev.js
+const deepmerge = require('deepmerge');
+const config = require('react-scv/config/eslint.dev');
+module.exports = deepmerge(config, {
+  rules: {
+    'no-console': 1
+  }
+});
+```
+
+## About overriding/extending:
+
+When overriding something please keep in mind that
 
 - you have to pay attention, we give you full freedom on what you can change, you are basically changing the react-scv code, this means, you might break something
 - don't go crazy, you will need to maintain your customizations, migrating to a future version of react-scv might be difficult if you add too many features
