@@ -2,7 +2,6 @@
 
 const DevServer = require('webpack-dev-server');
 const path = require('path');
-const fs = require('fs');
 const FlowStatusWebpackPlugin = require('flow-status-webpack-plugin');
 const CWD = process.cwd();
 const PACKAGE = require(path.join(CWD, 'package.json'));
@@ -48,7 +47,7 @@ module.exports = (args, done) => {
 
     const compiler = webpack(config);
 
-    config.output.publicPath = "http://" + host + ":" + port + config.output.publicPath;
+    config.output.publicPath = schema + "://" + host + ":" + port + config.output.publicPath;
 
     const server = new DevServer(compiler, config.devServer);
 
