@@ -19,6 +19,7 @@
     "build": "react-scv build",
     "start": "react-scv start",
     "test": "react-scv test",
+    "test:debug": "node --inspect-brk ./node_modules/react-scv/bin/react-scv test --runInBand",
     "postinstall": "react-scv dll"
   },
   "keywords": [],
