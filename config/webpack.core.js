@@ -2,8 +2,6 @@
 
 const DefinePlugin = require('webpack').DefinePlugin;
 const path = require('path');
-const qs = require('qs');
-
 const CWD = process.cwd();
 const BUILD = path.join(CWD, 'build');
 const CWD_NODE_MODULES = path.join(CWD, 'node_modules');
@@ -12,7 +10,11 @@ const PACKAGE = require(path.join(CWD, 'package.json'));
 const SRC_FILE = path.join(CWD, PACKAGE["react-scv"].appBuildEntry);
 const SRC = path.dirname(SRC_FILE);
 const TESTS = path.join(CWD, 'tests');
-const ENV = Object
+var ProgressBarWebpackPlugin = require('progress-bar-webpack-plugin');
+
+module.exports = function (config, cursors) {
+
+  const ENV = Object
   .keys(process.env)
   .filter(key => key.toUpperCase().startsWith('NEO_'))
   .reduce((env, key) => {
@@ -21,10 +23,6 @@ const ENV = Object
   }, {
     'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
   });
-
-var ProgressBarWebpackPlugin = require('progress-bar-webpack-plugin');
-
-module.exports = function (config, cursors) {
 
   return {
     output: {

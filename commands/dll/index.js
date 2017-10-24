@@ -1,8 +1,7 @@
 'use strict';
 
-const dllConfig = require('../../config/webpack.dll');
-const webpackBuild = require('../../src/webpackBuild');
-const fs = require('fs');
+const buildDevelopmentDll = require('../../src/buildDevelopmentDll');
+const buildProductionDll = require('../../src/buildProductionDll');
 const path = require('path');
 
 module.exports = (args, done) => {
@@ -13,7 +12,7 @@ module.exports = (args, done) => {
 
     console.log(' --- building the dll --- ');
 
-    return webpackBuild(dllConfig).then(done);
+    return buildProductionDll().then(buildDevelopmentDll);
 
   }
 

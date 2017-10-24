@@ -1,6 +1,7 @@
 'use strict';
 
 const DevServer = require('webpack-dev-server');
+const fs = require('fs');
 const path = require('path');
 const FlowStatusWebpackPlugin = require('flow-status-webpack-plugin');
 const CWD = process.cwd();
@@ -11,12 +12,12 @@ const flow = devServer.flow;
 const FLOW_EXE = path.join(CWD, 'node_modules/.bin/flow');
 const FLOW_TARGET = path.join(CWD, '/node_modules/react-scv/config/');
 const webpack = require('webpack');
-const buildDllIfNotPresent = require('../../src/buildDllIfNotPresent');
+const buildDevelopmentDll = require('../../src/buildDevelopmentDll');
 const middleware = require('../../src/middleware');
 
 module.exports = (args, done) => {
 
-  return buildDllIfNotPresent().then(() => {
+  return buildDevelopmentDllIfNotPresent().then(() => {
 
     if (!port) {
       throw new Error('Please specify a port for the dev server in your package.json => src.devServer.port property');
@@ -61,3 +62,25 @@ module.exports = (args, done) => {
   });
 
 };
+
+
+function buildDevelopmentDllIfNotPresent () {
+
+  return new Promise((resolve, reject) => {
+
+    console.log(' --- checking development dll existence --- ');
+
+    if (!fs.existsSync(path.join(process.cwd(), 'build/dev/app-dll-manifest.json')) || !fs.existsSync(path.join(process.cwd(), 'build/dev/app-dll.js'))) {
+
+      console.log('development dll not found');
+
+      buildDevelopmentDll().then(resolve).catch(reject);
+
+    } else {
+      console.log('development dll found, no need to build them again');
+      resolve();
+    }
+
+  });
+
+}

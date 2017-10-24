@@ -19,7 +19,7 @@ module.exports = function (config, cursors) {
   const coreConfig = require('./webpack.core')(config, cursors);
 
   return merge(coreConfig, {
-    devtool: 'source-map', //note: not working in conjunction with UglifyJsPlugin, see UglifyJsPlugin configuration below
+    //devtool: 'source-map', //note: not working in conjunction with UglifyJsPlugin, see UglifyJsPlugin configuration below
     entry: [APP_SRC_FILE],
     output: {
       path: BUILD,
@@ -57,7 +57,7 @@ module.exports = function (config, cursors) {
         new webpack.optimize.UglifyJsPlugin({
           compress: {warnings: false},
           output: {comments: false},
-          sourceMap: true //needed because of http://stackoverflow.com/questions/41942811/webpack-2-devtool-not-working
+          //sourceMap: true //needed because of http://stackoverflow.com/questions/41942811/webpack-2-devtool-not-working
         })
       ),
       cursors.push('html-webpack-plugin',

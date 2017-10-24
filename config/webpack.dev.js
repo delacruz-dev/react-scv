@@ -32,7 +32,7 @@ module.exports = function (config, cursors) {
       ),
       cursors.push('add-asset-html-webpack-plugin',
         new AddAssetHtmlWebpackPlugin({
-          filepath: path.join(CWD, 'build/app/app-dll.js'),
+          filepath: path.join(CWD, 'build/dev/app-dll.js'),
           includeSourcemap: false,
           hash: true,
         })
@@ -57,7 +57,7 @@ module.exports = function (config, cursors) {
       cursors.push('dll-reference-plugin',
         new webpack.DllReferencePlugin({
           context: '.',
-          manifest: require(path.join(CWD, 'build/app/app-dll-manifest.json'))
+          manifest: require(path.join(CWD, 'build/dev/app-dll-manifest.json'))
         })
       )
     ],
@@ -76,7 +76,7 @@ module.exports = function (config, cursors) {
       ]
     },
     devServer: deepmerge({
-      contentBase: [path.join(process.cwd(), 'src'), path.join(process.cwd(), 'build/app')],
+      contentBase: [path.join(process.cwd(), 'src'), path.join(process.cwd(), 'build/dev')],
 
       // Enable history API fallback so HTML5 History API based
       // routing works. This is a good default that will come
