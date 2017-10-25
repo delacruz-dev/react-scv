@@ -38,6 +38,7 @@ Is important to notice that your new project doesn't contain any configuration f
 - Sass
 - CSS modules (for files with extension .cssm or .scssm)
 - ESLint
+- Continuous Integration with circleCI
 
 ## How to work with my new project?
 
@@ -68,6 +69,67 @@ You can delete the file `src/module/index.js` and forget about it, from now on, 
 - `src/module/index.js` is used as entry point for the library produced by `npm run build`, contents not included in this file will not be part of the library.
 
 The rest of the project should be self explanatory.
+
+## Continuous Integration with circleCI:
+
+React-scv provides some CI features for you, these features are implemented in `.circleci/config.yml`
+
+### CI-1) Let circleCI run the tests for every push:
+
+- Authorize circleCI to read from github repository: https://github.com/marketplace/circleci
+- Add your project to circleCI: https://circleci.com/projects/gh/ORGANIZATION
+    - When requested, choose Operating System `linux`, Platform `2.0`, Language `Node` and then click `Start building`
+
+From now on circleCI will run the build and the tests on every push, you can check the status of the builds on https://circleci.com/dashboard
+
+You can also add a badge displaying the status of the last build in your readme using the following snippet:
+
+`[![CircleCI](https://circleci.com/gh/ORGANIZATION/PROJECT.svg?style=shield)](https://circleci.com/gh/ORGANIZATION/PROJECT)`
+
+### CI-2) Let circleCI create/update the build on every push:
+
+The content of the `build` folder is the one used when some project is importing yours as an npm dependency, therefore, it needs to be updated anytime you push new code to the repo.
+
+We implemented a script allowing circleCI to create/update a tag containing the result of the build anytime you push new code, all you need to do is to grant permissions to circleCI so that it is able to push this tag on the repo for you.
+
+You have many options to authorize circleCI to push new builds to github, details can be found here: https://circleci.com/gh/ORGANIZATION/PROJECT/edit#checkout
+
+Once circleCI is authorized to push you can uncomment the `Release` section of your `.circleci/config.yml` and push it to github.
+
+From now on circleCI will create/update a tag named `build-BRANCHNAME` (e.g `build-master`) for every push.
+
+Think of the `build-BRANCHNAME` tag as an unstable release of your project, this tag will be always updated with your latest code.
+
+This unstable release can be used by other projects to test your latest changes, all they need to do is to install the tag as an npm dependency e.g:
+
+`npm install git+ssh://git@github.com/ORGANIZATION/PROJECT#build-master`
+
+Please note that this tag should only be used for testing purposes, once your code is stable you can release a new version as described in the next section.
+
+### CI-3) Let circleCI release a stable version of your library:
+
+Once your code is stable you might want to release a stable version of your library.
+
+To release a new version all you need to do is invoke the following api:
+
+```
+curl -X POST -H "Content-Type: application/json" -d '{
+    "build_parameters": {
+        "VERSION": "0.0.1"
+    }
+}' "https://circleci.com/api/v1.1/project/github/ORGANIZATION/PROJECT/tree/master?circle-token=TOKEN"
+```
+
+- You need an api token to invoke the api, the token can be created here: https://circleci.com/gh/ORGANIZATION/PROJECT/edit#api
+- You need to configure the step CI-1 ans CI-2 in order for the release to work properly
+
+Please note that is only possible to release the master branch of your project.
+
+Releasing a stable version consists of creating a new tag named as the `VERSION` you specified in `build_parameters` (e.g 0.0.1) this tag contains the result of the build of your project.
+
+This tag can be used by other projects to install your library, all they need to do is to install the tag as an npm dependency e.g:
+
+`npm install --save git+ssh://git@github.com/ORGANIZATION/PROJECT#VERSION`
 
 ## Optional - Configuration, some basic stuff
 

@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function() {
-  const copyDirs = ['src', 'tests'];
+  const copyDirs = ['src', 'tests', '.circleci'];
   const copyFiles = [
     '.gitignore',
   ];
