@@ -10,7 +10,8 @@ const PACKAGE = require(path.join(CWD, 'package.json'));
 const SRC_FILE = path.join(CWD, PACKAGE["react-scv"].appBuildEntry);
 const SRC = path.dirname(SRC_FILE);
 const TESTS = path.join(CWD, 'tests');
-var ProgressBarWebpackPlugin = require('progress-bar-webpack-plugin');
+const ProgressBarWebpackPlugin = require('progress-bar-webpack-plugin');
+const merge = require('webpack-merge');
 
 module.exports = function (config, cursors) {
 
@@ -24,7 +25,7 @@ module.exports = function (config, cursors) {
     'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
   });
 
-  return {
+  return merge(config, {
     output: {
       path: BUILD,
       filename: 'bundle.js',
@@ -53,13 +54,6 @@ module.exports = function (config, cursors) {
           use: [
             {loader: 'source-map-loader'}
           ]
-        }),
-        cursors.push('html-rule', {
-          test: /\.html$/,
-          loader: 'file-loader',
-          options: {
-            name: '[name].[ext]'
-          }
         }),
         cursors.push('style-rule', {
           test: /\.s?css$/, // alternative *** : ^(?:(?:[^\.\s]+\.)(?!module))+s?css$
@@ -105,62 +99,9 @@ module.exports = function (config, cursors) {
               }
             },
           ],
-        }),
-        cursors.push('woff-rule', {
-          test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
-          loader: 'url-loader',
-          options: {
-            limit: 10000,
-            mimetype: 'application/font-woff'
-          }
-        }),
-        cursors.push('ttf-rule', {
-          test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-          loader: 'url-loader',
-          options: {
-            limit: '10000',
-            mimetype: 'application/octet-stream'
-          }
-        }),
-        cursors.push('eot-rule', {
-          test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-          loader: 'file-loader'
-        }),
-        cursors.push('svg-rule', {
-          test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-          loader: 'url-loader',
-          options: {
-            limit: '10000',
-            mimetype: 'image/svg+xml'
-          }
-        }),
-        cursors.push('png-rule', {
-          test: /\.(png)$/,
-          loader: 'url-loader',
-          options: {
-            limit: 8192
-          }
-        }),
-        cursors.push('jpg-rule', {
-          test: /\.(jpe?g)$/,
-          loader: 'url-loader',
-          options: {
-            limit: 8192
-          }
-        }),
-        cursors.push('gif-rule', {
-          test: /\.(gif)$/,
-          loader: 'url-loader',
-          options: {
-            limit: 8192
-          }
-        }),
-        cursors.push('ico-rule', {
-          test: /\.ico(\?v=\d+\.\d+\.\d+)?$/,
-          loader: 'url-loader'
         })
       ]
     }
-  };
+  });
 
 }

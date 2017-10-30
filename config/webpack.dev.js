@@ -15,11 +15,15 @@ const SRC = path.dirname(SRC_FILE);
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const AddAssetHtmlWebpackPlugin = require('add-asset-html-webpack-plugin');
 
+const applyCoreConfig = require('./webpack.core');
+const applyAssetsConfig = require('./webpack.assets');
+
 module.exports = function (config, cursors) {
 
-  const coreConfig = require('./webpack.core')(config, cursors);
+  config = applyCoreConfig(config, cursors);
+  config = applyAssetsConfig(config, cursors, {inline: false});
 
-  return merge(coreConfig, {
+  return merge(config, {
     entry: ['babel-polyfill', 'whatwg-fetch', SRC_FILE],
     devtool: 'source-map',
     plugins: [

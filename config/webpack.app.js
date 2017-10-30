@@ -14,11 +14,15 @@ const APP_SRC_FILE = path.join(CWD, PACKAGE["react-scv"].appBuildEntry);
 const SRC = path.dirname(APP_SRC_FILE);
 const BUILD = path.join(CWD, 'build/app');
 
+const applyCoreConfig = require('./webpack.core');
+const applyAssetsConfig = require('./webpack.assets');
+
 module.exports = function (config, cursors) {
 
-  const coreConfig = require('./webpack.core')(config, cursors);
+  config = applyCoreConfig(config, cursors);
+  config = applyAssetsConfig(config, cursors, {inline: false});
 
-  return merge(coreConfig, {
+  return merge(config, {
     //devtool: 'source-map', //note: not working in conjunction with UglifyJsPlugin, see UglifyJsPlugin configuration below
     entry: [APP_SRC_FILE],
     output: {

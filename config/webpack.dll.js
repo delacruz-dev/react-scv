@@ -3,7 +3,8 @@
 module.exports = function () {
 
   const overrides = require('../src/overrides');
-  const core = require('./webpack.core');
+  const applyCoreConfig = require('./webpack.core');
+  const applyAssetsConfig = require('./webpack.assets');
   const merge = require('webpack-merge');
   const path = require('path');
   const webpack = require('webpack');
@@ -14,9 +15,12 @@ module.exports = function () {
   const isProduction = process.env.NODE_ENV === 'production';
   const BUILD = isProduction ? path.join(CWD, 'build/app') : path.join(CWD, 'build/dev');
 
-  const coreConfig = core({}, createCursors());
+  const cursors = createCursors();
 
-  let config = merge(coreConfig, {
+  let config = applyCoreConfig({}, cursors);
+  config = applyAssetsConfig(config, cursors, {inline: false});
+
+  config = merge(config, {
     entry: {
       'app': dlls,
     },

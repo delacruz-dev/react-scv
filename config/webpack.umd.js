@@ -13,11 +13,15 @@ const SRC = path.dirname(UMD_SRC_FILE);
 const BUILD = path.join(CWD, 'build/umd');
 const nodeExternals = require('webpack-node-externals');
 
+const applyCoreConfig = require('./webpack.core');
+const applyAssetsConfig = require('./webpack.assets');
+
 module.exports = function (config, cursors) {
 
-  const coreConfig = require('./webpack.core')(config, cursors);
+  config = applyCoreConfig(config, cursors);
+  config = applyAssetsConfig(config, cursors, {inline: true});
 
-  return merge(coreConfig, {
+  return merge(config, {
     devtool: 'source-map', //note: not working in conjunction with UglifyJsPlugin, see UglifyJsPlugin configuration below
     entry: [UMD_SRC_FILE],
     output: {
