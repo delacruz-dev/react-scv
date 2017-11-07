@@ -1,9 +1,5 @@
 import React from 'react';
 
-export default React.createClass({
-    render() {
-        return <h1>
-            Hello world
-        </h1>
-    }
-})
+export default function Component () {
+  return <h1>Hello world</h1>
+}

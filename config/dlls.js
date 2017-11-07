@@ -2,8 +2,8 @@
 
 let dllModules = [
   'react',
-  'react-addons-test-utils',
-  'react-dom', 'query-string',
+  'react-dom',
+  'query-string',
   'babel-polyfill',
   'whatwg-fetch',
   'querystring-es3',

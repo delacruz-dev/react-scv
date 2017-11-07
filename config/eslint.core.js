@@ -5,13 +5,12 @@ module.exports = {
   failOnWarning: false,
   failOnError: true,
   plugins: [
-    'react',
-    'mocha'
+    'react'
   ],
   settings: {
     react: {
       pragma: 'React',
-      version: '15.0'
+      version: '16.0'
     }
   },
   extends: [

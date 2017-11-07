@@ -25,10 +25,5 @@
   "keywords": [],
   "devDependencies": {
     "react-scv": "0.0.10"
-  },
-  "dependencies": {
-    "react": "15.4.2",
-    "react-addons-test-utils": "15.4.2",
-    "react-dom": "15.4.2"
   }
 }

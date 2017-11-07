@@ -89,7 +89,6 @@ module.exports = function (config, cursors) {
                 babelrc: false,
                 presets: [
                   ['babel-preset-es2015', {"modules": false}], //{ "modules": false } is needed to make react-hot-loader work
-                  'babel-preset-flow',
                   'babel-preset-stage-0',
                   'babel-preset-react'
                 ],
