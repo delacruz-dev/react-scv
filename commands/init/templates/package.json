@@ -24,6 +24,6 @@
   },
   "keywords": [],
   "devDependencies": {
-    "react-scv": "0.0.10"
+    "react-scv": "0.0.11"
   }
 }
