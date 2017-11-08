@@ -4,6 +4,7 @@ module.exports = function() {
   const copyDirs = ['src', 'tests', '.circleci'];
   const copyFiles = [
     '.gitignore',
+    '.npmignore',
   ];
   const copyTemplates = [
     'package.json',

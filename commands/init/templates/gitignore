@@ -30,3 +30,6 @@ bower_components
 
 # Webstorm files
 .idea
+
+# build result
+build
